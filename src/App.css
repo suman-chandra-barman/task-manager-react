@@ -1,0 +1,132 @@
+#main_box{
+    margin: 20px;
+}
+
+#todo_section{
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+    overflow-x: auto;
+}
+
+.list-title{
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.list-input{
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.list-input:focus, .task-input:focus{
+    outline: none;
+}
+
+.task-input{
+    background-color: transparent;
+    padding: 10px;
+    color: white;
+    border: none;
+}
+
+.todo-btn{
+    padding: 15px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: none;
+}
+#add_list_btn{
+    min-width: 200px;
+}
+.add-task-btn{
+    text-align: left;
+}
+
+.add-task-btn:hover, #add_list_btn:hover{
+    background-color: rgb(66, 63, 63);
+}
+
+.task-name{
+    border: 1px solid black;
+}
+
+.task-card{
+    display: flex;
+    background-color: rgb(66, 63, 63);
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+
+.task-card:hover{
+    border: 1px solid white;
+}
+
+.task-modal {
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+  
+.task-modal-content {
+    background-color: rgb(66, 63, 63);
+    color: white;
+    margin: auto;
+    padding: 30px 30px 60px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 80%;
+    min-width: 400px;
+}
+  
+.task-modal-content input, .task-modal-content textarea{
+    color: white;
+    background-color: transparent;
+    padding: 10px;
+    border: 1px solid rgb(118, 118, 118);
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.task-modal-content input:focus, .task-modal-content textarea:focus{
+    outline: none;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.close:hover,
+.close:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+.task-details-btn, .task-save-btn{
+    background-color: transparent;
+    color: white;
+    padding: 8px 8px;
+    cursor: pointer;
+}
