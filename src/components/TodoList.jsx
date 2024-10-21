@@ -4,7 +4,8 @@ import { useState } from "react";
 
 function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement, setTodoData, setSelectedTask, setDraggedElement}){
     const [divRect,setDivRect] = useState();
-    const [isDrag, setIsDrag] = useState(false);
+    const [isListDrag, setIsListDrag] = useState(false);
+    const [isTaskDrag, setIsTaskDrag] = useState(false);
     const [dragStyle, setDragStyle] = useState({});
     const [taskDragStyle, setTaskDragStyle] = useState({});
     const [nativeOffset, setNativeOffset] = useState();
@@ -32,11 +33,10 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
     }
 
     function handleListDrag(event){
-        console.log("drag", event);
         event.stopPropagation();
         if(event.buttons === 1){
-            if(!isDrag){
-                setIsDrag(true);
+            if(!isListDrag){
+                setIsListDrag(true);
 
                 setDraggedElement({
                     element:todo,
@@ -51,8 +51,6 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
                 const offsetX = event.pageX - nativeOffset.x - Math.round(divRect.left);
                 const offsetY = event.pageY - nativeOffset.y - Math.round(divRect.top);
 
-                console.log("position", event.pageX, nativeOffset.x, Math.round(divRect.left));
-
                 setDragStyle({
                     transform: `translate(${offsetX + "px"}, ${offsetY + "px"})`,
                 });
@@ -61,15 +59,15 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
     }
  
     function handleTaskDrag(event, tIdx){
-        console.log("TaskDrag",tIdx, event.target);
         event.stopPropagation();
         if(event.buttons === 1){
-            if(!isDrag){
-                setIsDrag(true);
+            if(!isTaskDrag){
+                setIsTaskDrag(true);
 
                 setDraggedElement({
                     element:event.target,
-                    index:tIdx
+                    tIndex:tIdx,
+                    lIndex:lIdx
                 })
 
                 setDivRect(event.target.getBoundingClientRect());
@@ -88,12 +86,11 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
     }
  
     function handleListDragEnd(event){
-        console.log("dragEnd");
         event.stopPropagation();
         for(let i = 0; i< listDomRefs.current.length; i++){
-            const domRect = listDomRefs.current[i].getBoundingClientRect();
+            const listDomRect = listDomRefs.current[i].getBoundingClientRect();
 
-            if(event.pageX >= domRect.left && event.pageX <= domRect.right && i != lIdx){
+            if(event.pageX >= listDomRect.left && event.pageX <= listDomRect.right && event.pageY >= listDomRect.top && event.pageY <= listDomRect.bottom && i != lIdx){
                 const updatedTodoData = [...todoData];
                 const dragElement = updatedTodoData.splice(draggedElement.index, 1)[0];
                 updatedTodoData.splice(i, 0, dragElement);
@@ -102,32 +99,35 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
                 break;
             }
         }
-        setIsDrag(false);
+        setIsListDrag(false);
         setDraggedElement(null);
         setDragStyle({});
     }
 
     function handleTaskDragEnd(event){
-        console.log("taskDragEnd");
         event.stopPropagation();
-        console.log("taskDomRef", taskDomRefs);
-        // for(let i = 0; i< listDomRefs.current.length; i++){
-        //     const domRect = listDomRefs.current[i].getBoundingClientRect();
 
-        //     if(event.pageX >= domRect.left && event.pageX <= domRect.right && i != lIdx){
-        //         const updatedTodoData = [...todoData];
-        //         const dragElement = updatedTodoData.splice(draggedElement.index, 1)[0];
-        //         updatedTodoData.splice(i, 0, dragElement);
+        for(let listIndex = 0; listIndex < taskDomRefs.current.length; listIndex++){
+            for(let taskIndex = 0; taskIndex <taskDomRefs.current[listIndex].length; taskIndex++){
+                const taskDomRect = taskDomRefs.current[listIndex][taskIndex].getBoundingClientRect();
+
+                if(event.pageX >= taskDomRect.left && event.pageX <= taskDomRect.right && event.pageY >= taskDomRect.top && event.pageY <= taskDomRect.bottom && !(listIndex == draggedElement.lIndex && taskIndex == draggedElement.tIndex)){
+                    const updatedTodoData = [...todoData];
+    
+                    const dragElement = updatedTodoData[draggedElement.lIndex].tasks.splice(draggedElement.tIndex, 1)[0];
+                    updatedTodoData[listIndex].tasks.splice(taskIndex, 0, dragElement);
+                    
+                    setTodoData(updatedTodoData);
+                    break;
+                }
                 
-        //         setTodoData(updatedTodoData);
-        //         break;
-        //     }
-        // }
-        setIsDrag(false);
+            }
+        }
+
+        setIsTaskDrag(false);
         setDraggedElement(null);
         setTaskDragStyle({});
     }
-
 
     return (
         <div 
@@ -144,7 +144,7 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
                 }
             } 
             className="list-title"
-            style={isDrag ? dragStyle : {}}
+            style={isListDrag ? dragStyle : {}}
         >
             <input 
                 type="text"
@@ -180,7 +180,7 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
                         } 
                         key={tIdx} 
                         className="task-card"
-                        style={isDrag && draggedElement.index === tIdx ? taskDragStyle : {}}
+                       style={isTaskDrag && draggedElement.lIndex === lIdx && draggedElement.tIndex === tIdx ? taskDragStyle : {}}
                     >
                         <input 
                             onChange={
