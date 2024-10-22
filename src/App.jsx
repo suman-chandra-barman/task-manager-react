@@ -34,9 +34,9 @@ function App(){
  }
 
   return (
-    <main className="main-box">
+    <main className="main-container">
       <h1>Task Manager</h1>
-      <div className="todo-section">
+      <div className="todo-container">
         {
           todoData.map((todo,lIdx) =>
             < TodoList 
@@ -53,7 +53,7 @@ function App(){
             />
           )
         }
-        <button id="add_list_btn" className="todo-btn" onClick={handleAddList}>+ Add New List</button>
+        <button className="todo-btn add-list-btn" onClick={handleAddList}>+ Add New List</button>
       </div>
       {
         selectedTask && 

@@ -157,55 +157,57 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
                 value={todo.title} 
                 placeholder="Enter List Name"
             />
-            {
-                todo.tasks.map(function(_, tIdx){
-                    return (
-                    <div 
-                        draggable="true" 
-                        ref={(el) => {
-                            if(tIdx === 0){
-                                taskDomRefs.current[lIdx]=[];
-                            }
-                            taskDomRefs.current[lIdx][tIdx] = el;
-                        }}
-                        onDrag={
-                            function(event){
-                               return handleTaskDrag(event, tIdx);
-                            }
-                        }
-                        onDragEnd={
-                            function(event){
-                                return handleTaskDragEnd(event)
-                            }
-                        } 
-                        key={tIdx} 
-                        className="task-card"
-                       style={isTaskDrag && draggedElement.lIndex === lIdx && draggedElement.tIndex === tIdx ? taskDragStyle : {}}
-                    >
-                        <input 
-                            onChange={
+            <div className="task-container">
+                {
+                    todo.tasks.map(function(_, tIdx){
+                        return (
+                        <div 
+                            draggable="true" 
+                            ref={(el) => {
+                                if(tIdx === 0){
+                                    taskDomRefs.current[lIdx]=[];
+                                }
+                                taskDomRefs.current[lIdx][tIdx] = el;
+                            }}
+                            onDrag={
                                 function(event){
-                                    return handleTaskChange(event, tIdx)
+                                return handleTaskDrag(event, tIdx);
+                                }
+                            }
+                            onDragEnd={
+                                function(event){
+                                    return handleTaskDragEnd(event)
                                 }
                             } 
-                            type="text" 
-                            className="task-input" placeholder="Enter Task Name" 
-                            value={todo.tasks[tIdx].title} 
-                        />
-                        <button 
-                            onClick={
-                                function(){
-                                    return openTaskModal(lIdx, tIdx);
-                                }
-                            } 
-                            className="task-details-btn"
+                            key={tIdx} 
+                            className="task-card"
+                        style={isTaskDrag && draggedElement.lIndex === lIdx && draggedElement.tIndex === tIdx ? taskDragStyle : {}}
                         >
-                            Details
-                        </button>
-                    </div>
-                    )
-                })
-            }
+                            <input 
+                                onChange={
+                                    function(event){
+                                        return handleTaskChange(event, tIdx)
+                                    }
+                                } 
+                                type="text" 
+                                className="task-input" placeholder="Enter Task Name" 
+                                value={todo.tasks[tIdx].title} 
+                            />
+                            <button 
+                                onClick={
+                                    function(){
+                                        return openTaskModal(lIdx, tIdx);
+                                    }
+                                } 
+                                className="task-details-btn"
+                            >
+                                Details
+                            </button>
+                        </div>
+                        )
+                    })
+                }
+            </div>
             <button onClick={handleAddTask} className="todo-btn add-task-btn">+Add New Task</button>
         </div>
     )
