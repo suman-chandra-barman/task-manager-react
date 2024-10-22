@@ -34,9 +34,9 @@ function App(){
  }
 
   return (
-    <main id="main_box">
+    <main className="main-box">
       <h1>Task Manager</h1>
-      <div id="todo_section">
+      <div className="todo-section">
         {
           todoData.map((todo,lIdx) =>
             < TodoList 

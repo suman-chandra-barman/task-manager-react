@@ -143,7 +143,7 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
                     return handleListDragEnd(event)
                 }
             } 
-            className="list-title"
+            className="list"
             style={isListDrag ? dragStyle : {}}
         >
             <input 
@@ -153,7 +153,7 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
                         return handleListTitleChange(event, lIdx)
                     }
                 } 
-                className="list-input"
+                className="list-title-input"
                 value={todo.title} 
                 placeholder="Enter List Name"
             />
