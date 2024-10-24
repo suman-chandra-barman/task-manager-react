@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import "./App.css";
 import TodoList from "./components/TodoList";
 import TaskModal from "./components/TaskModal";
@@ -8,13 +8,13 @@ function App(){
   const [todoData, setTodoData] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [draggedElement, setDraggedElement] = useState(null);
+  const [targetedListIndex, setTargetedListIndex] = useState(null)
 
   const listDomRefs = useRef(new Array());
   const taskDomRefs = useRef(new Array());
 
   useEffect(function(){
       const localStorageTodoData = localStorage.getItem("todoData");
-      
       if(localStorageTodoData){
         setTodoData(JSON.parse(localStorageTodoData))
       }
@@ -39,8 +39,12 @@ function App(){
       <div className="todo-container">
         {
           todoData.map((todo,lIdx) =>
-            < TodoList 
-                key={lIdx} 
+            <Fragment key={lIdx} >
+              {targetedListIndex === lIdx?
+                <div className="list" style={{height:"160px", backgroundColor:"gray"}}></div>
+                :<></>
+              }
+              < TodoList
                 listDomRefs={listDomRefs}
                 taskDomRefs={taskDomRefs}
                 todo={todo} 
@@ -50,11 +54,22 @@ function App(){
                 setTodoData={setTodoData} 
                 setSelectedTask={setSelectedTask}
                 setDraggedElement={setDraggedElement}
-            />
+                setTargetedListIndex={setTargetedListIndex}
+              />
+            </Fragment>
+                
           )
         }
+
+        {targetedListIndex === todoData.length?
+          <div className="list" style={{height:"160px", backgroundColor:"gray"}}></div>
+          :<></>
+         }
+
         <button className="todo-btn add-list-btn" onClick={handleAddList}>+ Add New List</button>
       </div>
+
+      {/* modal */}
       {
         selectedTask && 
           <TaskModal 

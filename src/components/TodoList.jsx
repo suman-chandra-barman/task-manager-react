@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 
-function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement, setTodoData, setSelectedTask, setDraggedElement}){
+function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement, setTodoData, setSelectedTask, setDraggedElement, setTargetedListIndex}){
     const [divRect,setDivRect] = useState();
     const [isListDrag, setIsListDrag] = useState(false);
     const [isTaskDrag, setIsTaskDrag] = useState(false);
@@ -48,12 +48,35 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
             }
 
             if(divRect && nativeOffset){
-                const offsetX = event.pageX - nativeOffset.x - Math.round(divRect.left);
-                const offsetY = event.pageY - nativeOffset.y - Math.round(divRect.top);
+                const offsetX = event.pageX - nativeOffset.x;
+                const offsetY = event.pageY - nativeOffset.y;
 
                 setDragStyle({
-                    transform: `translate(${offsetX + "px"}, ${offsetY + "px"})`,
+                    position: 'absolute',
+                    left: offsetX + "px",
+                    top: offsetY + "px"
                 });
+
+                for(let i = 0; i< listDomRefs.current.length; i++){
+                    const listDomRect = listDomRefs.current[i].getBoundingClientRect();
+                    if(i === 0 && event.pageX <= listDomRect.left && i != lIdx){
+                        setTargetedListIndex(i);
+                        break;
+                    }
+
+                   if(i !== 0){
+                        const prevListDomRect = listDomRefs.current[i-1].getBoundingClientRect();
+                        if(event.pageX >= prevListDomRect.left && event.pageX <= listDomRect.left && i != lIdx){
+                            setTargetedListIndex(i);
+                            break;
+                        }
+                   }
+                   
+                    if(i === todoData.length-1 && event.pageX >= listDomRect.left && i != lIdx){
+                        setTargetedListIndex(i+1)
+                        break;
+                    }
+                }
             }
         }
     }
@@ -75,11 +98,13 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
             }
 
             if(divRect && nativeOffset){
-                const offsetX = event.pageX - nativeOffset.x - Math.round(divRect.left);
-                const offsetY = event.pageY - nativeOffset.y - Math.round(divRect.top);
+                const offsetX = event.pageX - nativeOffset.x;
+                const offsetY = event.pageY - nativeOffset.y;
 
                 setTaskDragStyle({
-                    transform: `translate(${offsetX + "px"}, ${offsetY + "px"})`,
+                    position: 'absolute',
+                    left: offsetX + "px",
+                    top: offsetY + "px"
                 });
             }
         }
@@ -90,15 +115,41 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
         for(let i = 0; i< listDomRefs.current.length; i++){
             const listDomRect = listDomRefs.current[i].getBoundingClientRect();
 
-            if(event.pageX >= listDomRect.left && event.pageX <= listDomRect.right && event.pageY >= listDomRect.top && event.pageY <= listDomRect.bottom && i != lIdx){
+            if(i === 0 && event.pageX <= listDomRect.left && i != lIdx){
                 const updatedTodoData = [...todoData];
                 const dragElement = updatedTodoData.splice(draggedElement.index, 1)[0];
-                updatedTodoData.splice(i, 0, dragElement);
+                const destinationIndex = draggedElement.index < i ? i-1 : i;
+                updatedTodoData.splice(destinationIndex, 0, dragElement);
+                
+                setTodoData(updatedTodoData);
+                break;
+            }
+
+           if(i !== 0){
+                const prevListDomRect = listDomRefs.current[i-1].getBoundingClientRect();
+                if(event.pageX >= prevListDomRect.left && event.pageX <= listDomRect.left && i != lIdx){
+                    const updatedTodoData = [...todoData];
+                    const dragElement = updatedTodoData.splice(draggedElement.index, 1)[0];
+                    const destinationIndex = draggedElement.index < i ? i-1 : i;
+                    updatedTodoData.splice(destinationIndex, 0, dragElement);
+                    
+                    setTodoData(updatedTodoData);
+                    break;
+                }
+           }
+
+            if(i === todoData.length-1 && event.pageX >= listDomRect.left && i != lIdx){
+                const updatedTodoData = [...todoData];
+                const dragElement = updatedTodoData.splice(draggedElement.index, 1)[0];
+                const destinationIndex = i;
+
+                updatedTodoData.splice(destinationIndex, 0, dragElement);
                 
                 setTodoData(updatedTodoData);
                 break;
             }
         }
+        setTargetedListIndex(null);
         setIsListDrag(false);
         setDraggedElement(null);
         setDragStyle({});
