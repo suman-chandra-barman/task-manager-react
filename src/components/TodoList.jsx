@@ -1,14 +1,31 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
-function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement, setTodoData, setSelectedTask, setDraggedElement, setTargetedListIndex}){
+function TodoList(
+        {
+            todo,
+            lIdx, 
+            listDomRefs,
+            taskDomRefs, 
+            todoData, 
+            draggedElement, 
+            targetedListIndex,
+            targetedTaskIndex,
+            setTodoData, 
+            setSelectedTask, 
+            setDraggedElement, 
+            setTargetedListIndex,
+            setTargetedTaskIndex
+        }
+    ){
     const [divRect,setDivRect] = useState();
     const [isListDrag, setIsListDrag] = useState(false);
     const [isTaskDrag, setIsTaskDrag] = useState(false);
     const [dragStyle, setDragStyle] = useState({});
     const [taskDragStyle, setTaskDragStyle] = useState({});
     const [nativeOffset, setNativeOffset] = useState();
+
 
     function handleAddTask(){
         const updatedTodoData = [...todoData];
@@ -57,7 +74,7 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
                     top: offsetY + "px"
                 });
 
-                for(let i = 0; i< listDomRefs.current.length; i++){
+                for(let i = 0; i < listDomRefs.current.length; i++){
                     const listDomRect = listDomRefs.current[i].getBoundingClientRect();
                     if(i === 0 && event.pageX <= listDomRect.left && i != lIdx){
                         setTargetedListIndex(i);
@@ -106,6 +123,37 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
                     left: offsetX + "px",
                     top: offsetY + "px"
                 });
+
+
+                for(let innerLIdx = 0; innerLIdx < taskDomRefs.current.length; innerLIdx++){
+
+                    for(let innerTIdx = 0; innerTIdx < taskDomRefs.current[innerLIdx].length; innerTIdx++){
+                        const taskDomRect = taskDomRefs.current[innerLIdx][innerTIdx].getBoundingClientRect();
+                            if(event.pageX >= taskDomRect.left && event.pageY >= taskDomRect.top && innerTIdx != tIdx){
+                                setTargetedTaskIndex({lIndex:innerLIdx,tIndex:innerTIdx});
+                                console.log("taskIndex", targetedTaskIndex);
+                                break;
+                            }
+
+                    //     if(i === 0 && event.pageX <= listDomRect.left && i != lIdx){
+                    //         setTargetedListIndex(i);
+                    //         break;
+                    //     }
+
+                    //    if(i !== 0){
+                    //         const prevListDomRect = listDomRefs.current[i-1].getBoundingClientRect();
+                    //         if(event.pageX >= prevListDomRect.left && event.pageX <= listDomRect.left && i != lIdx){
+                    //             setTargetedListIndex(i);
+                    //             break;
+                    //         }
+                    //    }
+                    
+                    //     if(i === todoData.length-1 && event.pageX >= listDomRect.left){
+                    //         setTargetedListIndex(i+1)
+                    //         break;
+                    //     }
+                    }
+                }
             }
         }
     }
@@ -209,55 +257,64 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
                 placeholder="Enter List Name"
             />
             <div className="task-container">
-                {
-                    todo.tasks.map(function(_, tIdx){
-                        return (
-                        <div 
-                            draggable="true" 
-                            ref={(el) => {
-                                if(tIdx === 0){
-                                    taskDomRefs.current[lIdx]=[];
+                    {
+                        todo.tasks.map((_, tIdx) => 
+                            <Fragment key={tIdx}>
+                                {
+                                  targetedTaskIndex?.lIndex === lIdx && targetedTaskIndex?.tIndex === tIdx ? 
+                                    <div className="task-card" style={{minHeight:"48px", backgroundColor:"gray"}}></div>
+                                    :<></>
                                 }
-                                taskDomRefs.current[lIdx][tIdx] = el;
-                            }}
-                            onDrag={
-                                function(event){
-                                return handleTaskDrag(event, tIdx);
-                                }
-                            }
-                            onDragEnd={
-                                function(event){
-                                    return handleTaskDragEnd(event)
-                                }
-                            } 
-                            key={tIdx} 
-                            className="task-card"
-                        style={isTaskDrag && draggedElement.lIndex === lIdx && draggedElement.tIndex === tIdx ? taskDragStyle : {}}
-                        >
-                            <input 
-                                onChange={
-                                    function(event){
-                                        return handleTaskChange(event, tIdx)
+                                <div 
+                                    draggable="true" 
+                                    ref={(el) => {
+                                        if(tIdx === 0){
+                                            taskDomRefs.current[lIdx]=[];
+                                        }
+                                        taskDomRefs.current[lIdx][tIdx] = el;
+                                    }}
+                                    onDrag={
+                                        function(event){
+                                        return handleTaskDrag(event, tIdx);
+                                        }
                                     }
-                                } 
-                                type="text" 
-                                className="task-input" placeholder="Enter Task Name" 
-                                value={todo.tasks[tIdx].title} 
-                            />
-                            <button 
-                                onClick={
-                                    function(){
-                                        return openTaskModal(lIdx, tIdx);
-                                    }
-                                } 
-                                className="task-details-btn"
-                            >
-                                Details
-                            </button>
-                        </div>
+                                    onDragEnd={
+                                        function(event){
+                                            return handleTaskDragEnd(event)
+                                        }
+                                    } 
+                                    className="task-card"
+                                    style={isTaskDrag && draggedElement.lIndex === lIdx && draggedElement.tIndex === tIdx ? taskDragStyle : {}}
+                                >
+                                    <input 
+                                        onChange={
+                                            function(event){
+                                                return handleTaskChange(event, tIdx)
+                                            }
+                                        } 
+                                        type="text" 
+                                        className="task-input" placeholder="Enter Task Name" 
+                                        value={todo.tasks[tIdx].title} 
+                                    />
+                                    <button 
+                                        onClick={
+                                            function(){
+                                                return openTaskModal(lIdx, tIdx);
+                                            }
+                                        } 
+                                        className="task-details-btn"
+                                    >
+                                        Details
+                                    </button>
+                                </div>
+                            </Fragment>
                         )
-                    })
-                }
+                    }
+                    {
+                        targetedTaskIndex?.lIndex === lIdx && targetedTaskIndex?.tIndex === todo.tasks.length ? 
+                            <div className="task-card" style={{minHeight:"48px", backgroundColor:"gray"}}></div>
+                        :<></>
+                    }
             </div>
             <button onClick={handleAddTask} className="todo-btn add-task-btn">+Add New Task</button>
         </div>

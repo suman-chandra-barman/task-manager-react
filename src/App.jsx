@@ -15,6 +15,7 @@ function App(){
   const [selectedTask, setSelectedTask] = useState(null);
   const [draggedElement, setDraggedElement] = useState(null);
   const [targetedListIndex, setTargetedListIndex] = useState(null);
+  const [targetedTaskIndex, setTargetedTaskIndex] = useState(null);
   const [themeState,  setThemeState] = useLocalStorage("theme", theme.light);
 
   const listDomRefs = useRef(new Array());
@@ -68,10 +69,13 @@ function App(){
                 lIdx={lIdx} 
                 todoData={todoData} 
                 draggedElement={draggedElement}
+                targetedListIndex={targetedListIndex}
+                targetedTaskIndex={targetedTaskIndex}
                 setTodoData={setTodoData} 
                 setSelectedTask={setSelectedTask}
                 setDraggedElement={setDraggedElement}
                 setTargetedListIndex={setTargetedListIndex}
+                setTargetedTaskIndex={setTargetedTaskIndex}
               />
             </Fragment>    
           )
