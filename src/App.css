@@ -5,6 +5,17 @@
     flex-direction: column;
 }
 
+.header-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.theme-btn{
+    width: 60px;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
 .todo-container{
     display: flex;
     flex-grow: 1;

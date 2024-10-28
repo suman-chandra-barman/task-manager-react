@@ -1,14 +1,21 @@
 /* eslint-disable no-unused-vars */
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import "./App.css";
 import TodoList from "./components/TodoList";
 import TaskModal from "./components/TaskModal";
+import { CiLight } from "react-icons/ci";
+import { MdNightlight } from "react-icons/md";
+import { ThemeContext, themes } from "./context/ThemeContext";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 function App(){
+  const theme = useContext(ThemeContext);
+
   const [todoData, setTodoData] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [draggedElement, setDraggedElement] = useState(null);
-  const [targetedListIndex, setTargetedListIndex] = useState(null)
+  const [targetedListIndex, setTargetedListIndex] = useState(null);
+  const [themeState,  setThemeState] = useLocalStorage("theme", theme.light);
 
   const listDomRefs = useRef(new Array());
   const taskDomRefs = useRef(new Array());
@@ -33,9 +40,19 @@ function App(){
   setTodoData(updatedTodoData);
  }
 
+ const themeStyle = {
+  color:themeState.foreground,
+  backgroundColor: themeState.background
+ }
+
   return (
-    <main className="main-container">
-      <h1>Task Manager</h1>
+    <main className="main-container" style={themeStyle}>
+      <div className="header-container">
+        <h1>Task Manager</h1>
+        <button onClick={() =>  themeState === themes.light ? setThemeState(themes.dark) : setThemeState(themes.light)} className="theme-btn">
+          {themeState === themes.light ? <CiLight size={20}/> : <MdNightlight size={20}/>}
+        </button>
+      </div>
       <div className="todo-container">
         {
           todoData.map((todo,lIdx) =>
@@ -56,8 +73,7 @@ function App(){
                 setDraggedElement={setDraggedElement}
                 setTargetedListIndex={setTargetedListIndex}
               />
-            </Fragment>
-                
+            </Fragment>    
           )
         }
 
