@@ -72,7 +72,7 @@ function TodoList({todo, lIdx, listDomRefs,taskDomRefs, todoData, draggedElement
                         }
                    }
                    
-                    if(i === todoData.length-1 && event.pageX >= listDomRect.left && i != lIdx){
+                    if(i === todoData.length-1 && event.pageX >= listDomRect.left){
                         setTargetedListIndex(i+1)
                         break;
                     }
