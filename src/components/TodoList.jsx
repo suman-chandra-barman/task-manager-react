@@ -124,36 +124,40 @@ function TodoList(
                     top: offsetY + "px"
                 });
 
-
-                for(let innerLIdx = 0; innerLIdx < taskDomRefs.current.length; innerLIdx++){
-
-                    for(let innerTIdx = 0; innerTIdx < taskDomRefs.current[innerLIdx].length; innerTIdx++){
-                        const taskDomRect = taskDomRefs.current[innerLIdx][innerTIdx].getBoundingClientRect();
-                            if(event.pageX >= taskDomRect.left && event.pageY >= taskDomRect.top && innerTIdx != tIdx){
-                                setTargetedTaskIndex({lIndex:innerLIdx,tIndex:innerTIdx});
-                                console.log("taskIndex", targetedTaskIndex);
-                                break;
-                            }
-
-                    //     if(i === 0 && event.pageX <= listDomRect.left && i != lIdx){
-                    //         setTargetedListIndex(i);
-                    //         break;
-                    //     }
-
-                    //    if(i !== 0){
-                    //         const prevListDomRect = listDomRefs.current[i-1].getBoundingClientRect();
-                    //         if(event.pageX >= prevListDomRect.left && event.pageX <= listDomRect.left && i != lIdx){
-                    //             setTargetedListIndex(i);
-                    //             break;
-                    //         }
-                    //    }
-                    
-                    //     if(i === todoData.length-1 && event.pageX >= listDomRect.left){
-                    //         setTargetedListIndex(i+1)
-                    //         break;
-                    //     }
+                //get list index
+                let listIndex = 0;
+                for(let i = 0; i < listDomRefs.current.length; i++){
+                    const listDomRect = listDomRefs.current[i].getBoundingClientRect();
+    
+                    if(event.pageX >= listDomRect.left && event.pageX <= listDomRect.right){
+                        listIndex = i;
+                        break;
                     }
                 }
+
+                //get task index
+                let taskIndex = 0;
+                for(let i = 0; i < taskDomRefs.current[listIndex].length; i++){
+                    const taskDomRect = taskDomRefs.current[listIndex][i].getBoundingClientRect();
+                    if(i === 0 && event.pageY <= taskDomRect.top && i != tIdx){
+                        taskIndex = i;
+                        break;
+                    }
+
+                   if(i !== 0){
+                        const prevTaskDomRect = taskDomRefs.current[listIndex][i-1].getBoundingClientRect();
+                        if(event.pageY >= prevTaskDomRect.top && event.pageY <= taskDomRect.top && i != tIdx){
+                            taskIndex = i;
+                            break;
+                        }
+                   }
+                   
+                    if(i === todoData[listIndex].tasks.length-1 && event.pageY >= taskDomRect.top){
+                        taskIndex = i + 1;
+                        break;
+                    }
+                }
+                setTargetedTaskIndex({lIndex:listIndex,tIndex:taskIndex});
             }
         }
     }
@@ -222,7 +226,7 @@ function TodoList(
                 
             }
         }
-
+        setTargetedTaskIndex(null)
         setIsTaskDrag(false);
         setDraggedElement(null);
         setTaskDragStyle({});
