@@ -115,26 +115,54 @@
     height: 100%;
     overflow: auto;
 }
-  
+
+/* Task Modal */
 .task-modal-content {
+    display: flex;
+    gap: 15px;
     background-color: rgb(66, 63, 63);
     color: white;
     margin: auto;
-    padding: 30px 30px 60px;
+    padding:  15px;
     border: 1px solid #888;
     border-radius: 10px;
     width: 80%;
     min-width: 400px;
 }
-  
+.task-modal-main-content{
+    display: flex;
+    gap: 10px;
+    width: 95%;
+}
+
+.task-modal-left-side{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 80%;
+}
+.task-modal-right-side{
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.task-modal-btn{
+    padding: 10px 20px;
+    width: 100%;
+}
 .task-modal-content input, .task-modal-content textarea{
     color: white;
     background-color: transparent;
     padding: 10px;
     border: 1px solid rgb(118, 118, 118);
     border-radius: 5px;
-    margin-top: 10px;
     width: 100%;
+}
+
+.task-modal-content textarea{
+    height: 200px;
 }
 
 .task-modal-content input:focus, .task-modal-content textarea:focus{
@@ -142,10 +170,12 @@
 }
 
 .close {
+    text-align: right;
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
+    margin-top: -7px;
 }
   
 .close:hover,
