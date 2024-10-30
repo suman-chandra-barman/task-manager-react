@@ -10,7 +10,6 @@ function TodoList(
             taskDomRefs, 
             todoData, 
             draggedElement, 
-            targetedListIndex,
             targetedTaskIndex,
             setTodoData, 
             setSelectedTask, 
@@ -164,13 +163,13 @@ function TodoList(
  
     function handleListDragEnd(event){
         event.stopPropagation();
-        for(let i = 0; i< listDomRefs.current.length; i++){
+        for(let i = 0; i < listDomRefs.current.length; i++){
             const listDomRect = listDomRefs.current[i].getBoundingClientRect();
 
             if(i === 0 && event.pageX <= listDomRect.left && i != lIdx){
                 const updatedTodoData = [...todoData];
                 const dragElement = updatedTodoData.splice(draggedElement.index, 1)[0];
-                const destinationIndex = draggedElement.index < i ? i-1 : i;
+                const destinationIndex = i;
                 updatedTodoData.splice(destinationIndex, 0, dragElement);
                 
                 setTodoData(updatedTodoData);
@@ -190,7 +189,7 @@ function TodoList(
                 }
            }
 
-            if(i === todoData.length-1 && event.pageX >= listDomRect.left && i != lIdx){
+            if(i === todoData.length - 1 && event.pageX >= listDomRect.left && i != lIdx){
                 const updatedTodoData = [...todoData];
                 const dragElement = updatedTodoData.splice(draggedElement.index, 1)[0];
                 const destinationIndex = i;
@@ -207,23 +206,52 @@ function TodoList(
         setDragStyle({});
     }
 
-    function handleTaskDragEnd(event){
+    function handleTaskDragEnd(event, tIdx){
         event.stopPropagation();
+        
+        let listIndex = 0;
+        for(let i = 0; i < listDomRefs.current.length; i++){
+            const listDomRect = listDomRefs.current[i].getBoundingClientRect();
 
-        for(let listIndex = 0; listIndex < taskDomRefs.current.length; listIndex++){
-            for(let taskIndex = 0; taskIndex <taskDomRefs.current[listIndex].length; taskIndex++){
-                const taskDomRect = taskDomRefs.current[listIndex][taskIndex].getBoundingClientRect();
+            if(event.pageX >= listDomRect.left && event.pageX <= listDomRect.right){
+                listIndex = i;
+                break;
+            }
+        }
 
-                if(event.pageX >= taskDomRect.left && event.pageX <= taskDomRect.right && event.pageY >= taskDomRect.top && event.pageY <= taskDomRect.bottom && !(listIndex == draggedElement.lIndex && taskIndex == draggedElement.tIndex)){
+        for(let i = 0; i < taskDomRefs.current[listIndex].length; i++){
+            const taskDomRect = taskDomRefs.current[listIndex][i].getBoundingClientRect();
+            if(i === 0 && event.pageY <= taskDomRect.top && i != tIdx){
+                const updatedTodoData = [...todoData];
+                const dragElement = updatedTodoData[draggedElement.lIndex].tasks.splice(draggedElement.tIndex, 1)[0];
+                const destinationIndex = i;
+                updatedTodoData[listIndex].tasks.splice(destinationIndex, 0, dragElement);
+                
+                setTodoData(updatedTodoData);
+                break;
+            }
+
+           if(i !== 0){
+                const prevTaskDomRect = taskDomRefs.current[listIndex][i-1].getBoundingClientRect();
+                if(event.pageY >= prevTaskDomRect.top && event.pageY <= taskDomRect.top && i != tIdx){
                     const updatedTodoData = [...todoData];
-    
                     const dragElement = updatedTodoData[draggedElement.lIndex].tasks.splice(draggedElement.tIndex, 1)[0];
-                    updatedTodoData[listIndex].tasks.splice(taskIndex, 0, dragElement);
+                    const destinationIndex = draggedElement.tIndex < i ? i - 1 : i;
+                    updatedTodoData[listIndex].tasks.splice(destinationIndex, 0, dragElement);
                     
                     setTodoData(updatedTodoData);
                     break;
                 }
+           }
+           
+            if(i === todoData[listIndex].tasks.length-1 && event.pageY >= taskDomRect.top){
+                const updatedTodoData = [...todoData];
+                const dragElement = updatedTodoData[draggedElement.lIndex].tasks.splice(draggedElement.tIndex, 1)[0];
+                const destinationIndex = i + 1 ;
+                updatedTodoData[listIndex].tasks.splice(destinationIndex, 0, dragElement);
                 
+                setTodoData(updatedTodoData);
+                break;
             }
         }
         setTargetedTaskIndex(null)
@@ -284,7 +312,7 @@ function TodoList(
                                     }
                                     onDragEnd={
                                         function(event){
-                                            return handleTaskDragEnd(event)
+                                            return handleTaskDragEnd(event, tIdx)
                                         }
                                     } 
                                     className="task-card"

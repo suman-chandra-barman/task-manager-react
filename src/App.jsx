@@ -69,7 +69,6 @@ function App(){
                 lIdx={lIdx} 
                 todoData={todoData} 
                 draggedElement={draggedElement}
-                targetedListIndex={targetedListIndex}
                 targetedTaskIndex={targetedTaskIndex}
                 setTodoData={setTodoData} 
                 setSelectedTask={setSelectedTask}
