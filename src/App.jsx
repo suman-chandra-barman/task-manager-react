@@ -36,7 +36,7 @@ function App(){
 
  function handleAddList(){
   const updatedTodoData = [...todoData];
-  updatedTodoData.push({title:"",tasks:[]});
+  updatedTodoData.push({title:"", tasks:[], checklists:[]});
 
   setTodoData(updatedTodoData);
  }
@@ -50,8 +50,8 @@ function App(){
     <main className="main-container" style={themeStyle}>
       <div className="header-container">
         <h1>Task Manager</h1>
-        <button onClick={() =>  themeState === themes.light ? setThemeState(themes.dark) : setThemeState(themes.light)} className="theme-btn">
-          {themeState === themes.light ? <CiLight size={20}/> : <MdNightlight size={20}/>}
+        <button onClick={() =>  themeState === theme.light ? setThemeState(theme.dark) : setThemeState(theme.light)} className="theme-btn">
+          {themeState === theme.light ? <CiLight size={20}/> : <MdNightlight size={20}/>}
         </button>
       </div>
       <div className="todo-container">

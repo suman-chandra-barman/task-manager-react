@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import { GoChecklist } from "react-icons/go";
+
 function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData}){
     function closeTaskModal(){
         setSelectedTask(null)
@@ -16,10 +18,39 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
         setTodoData(updatedTodoData);
     }
 
-    function handleChecklist(){
-        
+    function handleAddChecklist(){
+        const updatedChecklist = [...todoData];
+        updatedChecklist[selectedTask.listIndex].checklists.push({name:"Checklist", items:[]});
+        setTodoData(updatedChecklist);
+
     }
 
+    function handleChecklistItem(checklistIdx) {
+        const updatedChecklist = [...todoData];
+        updatedChecklist[selectedTask.listIndex].checklists[checklistIdx].items.push({name:"", isChecked:false});
+        setTodoData(updatedChecklist);
+        console.log(todoData);
+    }
+
+    function handleChecklistTitleChange(e,checklistIdx){
+        const updatedTodoData = [...todoData];
+        updatedTodoData[selectedTask.listIndex].checklists[checklistIdx].name = e.target.value;
+        setTodoData(updatedTodoData);
+    }
+
+    function handleChecklistItemChange(e,checklistIdx,itemIdx){
+        const updatedTodoData = [...todoData];
+        updatedTodoData[selectedTask.listIndex].checklists[checklistIdx].items[itemIdx].name = e.target.value;
+        setTodoData(updatedTodoData);
+    }
+
+    function handleChecklistItemCheckboxStatusChange(e,checklistIdx,itemIdx){
+        const updatedTodoData = [...todoData];
+        updatedTodoData[selectedTask.listIndex].checklists[checklistIdx].items[itemIdx].isChecked = e.target.checked;
+        setTodoData(updatedTodoData);
+    }
+
+    console.log('data', todoData);
     return(
         <div id="task_modal" className="task-modal">
             <div className="task-modal-content">
@@ -31,7 +62,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                             }
                         } 
                         id="modal_task_title" 
-                        className="modal-task-title" 
+                        className="task-modal-input"
                         type="text" value={task.title} 
                         placeholder="Enter task name"
                     />
@@ -41,22 +72,72 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                 return handleTaskModalDescriptionChange(event)
                             }
                         } 
-                        id="modal_task_description" 
+                        id="modal_task_description"
+                        className="task-modal-input"
                         value={task.description} 
                         rows="4" 
                         placeholder="Enter your task description..."
                     >
                     </textarea>
+                    <div className="checklist-container">
+                        {todoData[selectedTask.listIndex].checklists?.map((checklist, checklistIdx) =>
+                            <div key={checklistIdx}>
+                                <div className="checklist-title-container">
+                                    <GoChecklist className="checklist-title-icon"/>
+                                    <input
+                                        onChange={
+                                            function(event){
+                                                return handleChecklistTitleChange(event, checklistIdx);
+                                            }
+                                        }
+                                        type="text"
+                                        value={checklist.name}
+                                        className="task-modal-input"/>
+                                </div>
+                                <div className="checklist-item-progress-container">
+                                    <span className="">50%</span>
+                                    <progress className='checklist-item-progress' value={50} max={100}></progress>
+                                </div>
+                                <div className="checklist-item-container">
+                                    {
+                                        todoData[selectedTask.listIndex].checklists[checklistIdx].items?.map((item, itemIdx) =>
+                                            <div key={itemIdx} className="checklist-item">
+                                                <input
+                                                    onChange={
+                                                        function(event){
+                                                            return handleChecklistItemCheckboxStatusChange(event, checklistIdx,itemIdx);
+                                                        }
+                                                    }
+                                                    type="checkbox"
+                                                    className="checklist-item-checkbox task-modal-input"
+                                                    checked={item.isChecked}
+                                                />
+                                                <input
+                                                    onChange={
+                                                        function(event){
+                                                            return handleChecklistItemChange(event, checklistIdx,itemIdx);
+                                                        }
+                                                    }
+                                                    type="text"
+                                                    value={item.name}
+                                                    className="task-modal-input"
+                                                />
+                                            </div>)
+                                    }
+                                    <button onClick={() => handleChecklistItem(checklistIdx)} className="add-checklist-item-btn">Add an item</button>
+                                </div>
+                            </div>)
+                        }
+                    </div>
                 </div>
                 <div className="task-modal-right-side">
                     <span id="modal_close_btn" onClick={closeTaskModal} className="close">&times;</span>
                     <div>
-                        <button onClick={handleChecklist} className="task-modal-btn">Checklist</button>
+                        <button onClick={handleAddChecklist} className="task-modal-btn">Checklist</button>
                     </div>
                 </div>
             </div>
         </div>
-
     )
 }
 
