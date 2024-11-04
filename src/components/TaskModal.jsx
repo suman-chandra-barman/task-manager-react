@@ -80,53 +80,71 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                     >
                     </textarea>
                     <div className="checklist-container">
-                        {todoData[selectedTask.listIndex].checklists?.map((checklist, checklistIdx) =>
-                            <div key={checklistIdx}>
-                                <div className="checklist-title-container">
-                                    <GoChecklist className="checklist-title-icon"/>
-                                    <input
-                                        onChange={
-                                            function(event){
-                                                return handleChecklistTitleChange(event, checklistIdx);
-                                            }
-                                        }
-                                        type="text"
-                                        value={checklist.name}
-                                        className="task-modal-input"/>
-                                </div>
-                                <div className="checklist-item-progress-container">
-                                    <span className="">50%</span>
-                                    <progress className='checklist-item-progress' value={50} max={100}></progress>
-                                </div>
-                                <div className="checklist-item-container">
-                                    {
-                                        todoData[selectedTask.listIndex].checklists[checklistIdx].items?.map((item, itemIdx) =>
-                                            <div key={itemIdx} className="checklist-item">
+                        {
+                            todoData[selectedTask.listIndex].checklists?.map((checklist, checklistIdx) =>
+                                {
+                                    let itemProgress  = 100 / todoData[selectedTask.listIndex].checklists[checklistIdx].items.length * todoData[selectedTask.listIndex].checklists[checklistIdx].items.filter(i => i.isChecked).length;
+                                    if(isNaN(itemProgress)){
+                                        itemProgress = 0;
+                                    }
+                                    return (
+                                        <div key={checklistIdx}>
+                                            <div className="checklist-title-container">
+                                                <GoChecklist className="checklist-title-icon"/>
                                                 <input
                                                     onChange={
-                                                        function(event){
-                                                            return handleChecklistItemCheckboxStatusChange(event, checklistIdx,itemIdx);
-                                                        }
-                                                    }
-                                                    type="checkbox"
-                                                    className="checklist-item-checkbox task-modal-input"
-                                                    checked={item.isChecked}
-                                                />
-                                                <input
-                                                    onChange={
-                                                        function(event){
-                                                            return handleChecklistItemChange(event, checklistIdx,itemIdx);
+                                                        function (event) {
+                                                            return handleChecklistTitleChange(event, checklistIdx);
                                                         }
                                                     }
                                                     type="text"
-                                                    value={item.name}
-                                                    className="task-modal-input"
-                                                />
-                                            </div>)
-                                    }
-                                    <button onClick={() => handleChecklistItem(checklistIdx)} className="add-checklist-item-btn">Add an item</button>
-                                </div>
-                            </div>)
+                                                    value={checklist.name}
+                                                    className="task-modal-input"/>
+                                            </div>
+                                            <div className="checklist-item-progress-container">
+                                                <span
+                                                    className="">{itemProgress}%</span>
+                                                <progress
+                                                    className='checklist-item-progress'
+                                                    value={itemProgress}
+                                                    max={100}
+                                                >
+                                                </progress>
+                                            </div>
+                                            <div className="checklist-item-container">
+                                                {
+                                                    todoData[selectedTask.listIndex].checklists[checklistIdx].items?.map((item, itemIdx) =>
+                                                        <div key={itemIdx} className="checklist-item">
+                                                            <input
+                                                                onChange={
+                                                                    function (event) {
+                                                                        return handleChecklistItemCheckboxStatusChange(event, checklistIdx, itemIdx);
+                                                                    }
+                                                                }
+                                                                type="checkbox"
+                                                                className="checklist-item-checkbox task-modal-input"
+                                                                checked={item.isChecked}
+                                                            />
+                                                            <input
+                                                                onChange={
+                                                                    function (event) {
+                                                                        return handleChecklistItemChange(event, checklistIdx, itemIdx);
+                                                                    }
+                                                                }
+                                                                type="text"
+                                                                value={item.name}
+                                                                className="task-modal-input"
+                                                            />
+                                                        </div>)
+                                                }
+                                                <button onClick={() => handleChecklistItem(checklistIdx)}
+                                                        className="add-checklist-item-btn">Add an item
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            )
                         }
                     </div>
                 </div>
