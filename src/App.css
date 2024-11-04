@@ -174,7 +174,7 @@
     color: white;
 }
 
-.add-checklist-item-btn:hover, .task-modal-btn:hover{
+.add-checklist-item-btn:hover, .task-modal-btn:hover, .checklist-delete-btn:hover{
     background-color: rgb(120, 120, 120);
 }
 
@@ -260,4 +260,31 @@
 .checklist-item-progress{
     width: 100%;
 
+}
+
+.checklist-title-input-box, .checklist-list-input-box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    position: relative;
+}
+.checklist-delete-btn{
+    padding: 7px 10px;
+    background-color: rgb(100, 100, 100);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    position: absolute;
+    right: 3px;
+}
+.checklist-list-delete-btn{
+    padding:3px;
+    position: absolute;
+    right: 3px;
+    color: indianred;
+}
+.checklist-list-delete-btn:hover{
+    color: red;
 }

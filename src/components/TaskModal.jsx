@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { GoChecklist } from "react-icons/go";
+import { MdDelete } from "react-icons/md";
 
 function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData}){
     function closeTaskModal(){
@@ -50,6 +51,18 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
         setTodoData(updatedTodoData);
     }
 
+    function handleDeleteChecklist(checklistIdx){
+        const updatedChecklist = [...todoData];
+        updatedChecklist[selectedTask.listIndex].checklists.splice(checklistIdx, 1);
+        setTodoData(updatedChecklist);
+    }
+
+    function handleDeleteChecklistItem(checklistIdx, itemIdx){
+        const updatedChecklist = [...todoData];
+        updatedChecklist[selectedTask.listIndex].checklists[checklistIdx].items.splice(itemIdx, 1);
+        setTodoData(updatedChecklist);
+    }
+
     console.log('data', todoData);
     return(
         <div id="task_modal" className="task-modal">
@@ -91,15 +104,19 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                         <div key={checklistIdx}>
                                             <div className="checklist-title-container">
                                                 <GoChecklist className="checklist-title-icon"/>
-                                                <input
-                                                    onChange={
-                                                        function (event) {
-                                                            return handleChecklistTitleChange(event, checklistIdx);
+                                                <div className="checklist-title-input-box">
+                                                    <input
+                                                        onChange={
+                                                            function (event) {
+                                                                return handleChecklistTitleChange(event, checklistIdx);
+                                                            }
                                                         }
-                                                    }
-                                                    type="text"
-                                                    value={checklist.name}
-                                                    className="task-modal-input focus-effect"/>
+                                                        type="text"
+                                                        value={checklist.name}
+                                                        className="task-modal-input focus-effect"
+                                                    />
+                                                    <button onClick={() => handleDeleteChecklist(checklistIdx)} className="checklist-delete-btn">Delete</button>
+                                                </div>
                                             </div>
                                             <div className="checklist-item-progress-container">
                                                 <span
@@ -125,16 +142,19 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                                                 className="checklist-item-checkbox task-modal-input"
                                                                 checked={item.isChecked}
                                                             />
-                                                            <input
-                                                                onChange={
-                                                                    function (event) {
-                                                                        return handleChecklistItemChange(event, checklistIdx, itemIdx);
+                                                            <div className="checklist-list-input-box">
+                                                                <input
+                                                                    onChange={
+                                                                        function (event) {
+                                                                            return handleChecklistItemChange(event, checklistIdx, itemIdx);
+                                                                        }
                                                                     }
-                                                                }
-                                                                type="text"
-                                                                value={item.name}
-                                                                className="task-modal-input hover-effect"
-                                                            />
+                                                                    type="text"
+                                                                    value={item.name}
+                                                                    className="task-modal-input hover-effect"
+                                                                />
+                                                                    <MdDelete onClick={()=> handleDeleteChecklistItem(checklistIdx,itemIdx)} className="checklist-list-delete-btn" size={30}/>
+                                                            </div>
                                                         </div>)
                                                 }
                                                 <button onClick={() => handleChecklistItem(checklistIdx)}
