@@ -62,7 +62,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                             }
                         } 
                         id="modal_task_title" 
-                        className="task-modal-input"
+                        className="task-modal-input focus-effect"
                         type="text" value={task.title} 
                         placeholder="Enter task name"
                     />
@@ -73,7 +73,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                             }
                         } 
                         id="modal_task_description"
-                        className="task-modal-input"
+                        className="task-modal-input hover-effect"
                         value={task.description} 
                         rows="4" 
                         placeholder="Enter your task description..."
@@ -99,7 +99,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                                     }
                                                     type="text"
                                                     value={checklist.name}
-                                                    className="task-modal-input"/>
+                                                    className="task-modal-input focus-effect"/>
                                             </div>
                                             <div className="checklist-item-progress-container">
                                                 <span
@@ -133,7 +133,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                                                 }
                                                                 type="text"
                                                                 value={item.name}
-                                                                className="task-modal-input"
+                                                                className="task-modal-input hover-effect"
                                                             />
                                                         </div>)
                                                 }

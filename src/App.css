@@ -145,7 +145,7 @@
 .task-modal-left-side{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 30px;
     width: 80%;
 }
 .task-modal-right-side{
@@ -158,31 +158,43 @@
 .task-modal-btn{
     padding: 10px 20px;
     width: 100%;
-    background-color: rgb(159, 154, 154);
+    background-color: rgb(100, 100, 100);
     border: none;
     border-radius: 5px;
+    color: white;
 }
 
 .add-checklist-item-btn{
     margin-left: 28px;
     padding: 10px 20px;
-    background-color: rgb(159, 154, 154);
+    background-color: rgb(100, 100, 100);
     border: none;
     border-radius: 5px;
     width: 150px;
+    color: white;
 }
 
 .add-checklist-item-btn:hover, .task-modal-btn:hover{
-    background-color: rgb(188, 187, 187);
+    background-color: rgb(120, 120, 120);
 }
 
 .task-modal-input{
     color: white;
     background-color: transparent;
     padding: 10px;
-    border: 1px solid rgb(118, 118, 118);
+    border: 2px solid transparent;
     border-radius: 5px;
     width: 100%;
+}
+.hover-effect:hover{
+    background-color: rgb(100, 100, 100);
+}
+.hover-effect:focus{
+    background-color: transparent;
+    border: 2px solid rgb(118, 118, 118);
+}
+.focus-effect:focus{
+    border: 2px solid rgb(118, 118, 118);
 }
 
 .task-modal-content textarea{
@@ -212,7 +224,7 @@
 .checklist-container{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 30px;
 }
 .checklist-title-container{
     display: flex;
