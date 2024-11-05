@@ -288,3 +288,66 @@
 .checklist-list-delete-btn:hover{
     color: red;
 }
+.border{
+    border: 2px solid rgb(118, 118, 118);
+}
+.description-btn-container{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.description-save-btn{
+    padding: 7px 10px;
+    background-color: #0c66e4;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+.description-cancel-btn{
+    padding: 7px 10px;
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+.description-cancel-btn:hover{
+    padding: 7px 10px;
+    background-color: rgb(100, 100, 100);
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+/*------------------------- React quill Customize Style -----------------------------*/
+.quill {
+    border: 2px solid rgb(118, 118, 118);
+    border-radius: 5px;
+}
+.ql-container.ql-snow{
+    border: none !important;
+    height: 200px;
+}
+.ql-toolbar.ql-snow{
+    border: none !important;
+    border-bottom: 1px solid rgb(100, 100, 100) !important;
+}
+.ql-toolbar .ql-picker {
+    color: #fff !important;
+}
+.ql-toolbar .ql-fill {
+    fill: #fff;
+    stroke: none;
+}
+.ql-toolbar .ql-stroke {
+    stroke: #fff !important;
+}
+.ql-toolbar .ql-fill {
+    fill: #fff !important;
+}
+.ql-editor::before {
+    color: #767676 !important;
+    font-style: italic;
+    opacity: 1;
+}
+.ql-snow .ql-picker-options{
+    color: black !important;
+}

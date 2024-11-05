@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
 import { GoChecklist } from "react-icons/go";
 import { MdDelete } from "react-icons/md";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData}){
+
     function closeTaskModal(){
         setSelectedTask(null)
     }
@@ -13,10 +16,11 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
         setTodoData(updatedTodoData);
     }
 
-    function handleTaskModalDescriptionChange(e){
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].description = e.target.value;
-        setTodoData(updatedTodoData);
+    function handleTaskModalDescriptionChange(value){
+            const updatedTodoData = [...todoData];
+            updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].description = value;
+            setTodoData(updatedTodoData);
+
     }
 
     function handleAddChecklist(){
@@ -63,7 +67,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
         setTodoData(updatedChecklist);
     }
 
-    console.log('data', todoData);
+    // console.log('value', value);
     return(
         <div id="task_modal" className="task-modal">
             <div className="task-modal-content">
@@ -75,23 +79,30 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                             }
                         } 
                         id="modal_task_title" 
-                        className="task-modal-input focus-effect"
-                        type="text" value={task.title} 
+                        className="task-modal-input border"
+                        type="text"
+                        value={task.title}
                         placeholder="Enter task name"
                     />
-                    <textarea 
-                        onChange={
-                            function(event){
-                                return handleTaskModalDescriptionChange(event)
-                            }
-                        } 
-                        id="modal_task_description"
-                        className="task-modal-input hover-effect"
-                        value={task.description} 
-                        rows="4" 
-                        placeholder="Enter your task description..."
-                    >
-                    </textarea>
+                    {/*<textarea */}
+                    {/*    onChange={*/}
+                    {/*        function(event){*/}
+                    {/*            return handleTaskModalDescriptionChange(event)*/}
+                    {/*        }*/}
+                    {/*    } */}
+                    {/*    id="modal_task_description"*/}
+                    {/*    className="task-modal-input hover-effect border"*/}
+                    {/*    value={task.description} */}
+                    {/*    rows="4" */}
+                    {/*    placeholder="Enter your task description..."*/}
+                    {/*>*/}
+                    {/*</textarea>*/}
+                        <ReactQuill
+                            theme="snow"
+                            value={task.description}
+                            onChange={handleTaskModalDescriptionChange}
+                            placeholder="Start typing here..."
+                        />
                     <div className="checklist-container">
                         {
                             todoData[selectedTask.listIndex].checklists?.map((checklist, checklistIdx) =>
@@ -113,7 +124,8 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                                         }
                                                         type="text"
                                                         value={checklist.name}
-                                                        className="task-modal-input focus-effect"
+                                                        className="task-modal-input border"
+                                                        placeholder="Write checklist name"
                                                     />
                                                     <button onClick={() => handleDeleteChecklist(checklistIdx)} className="checklist-delete-btn">Delete</button>
                                                 </div>
@@ -152,6 +164,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                                                     type="text"
                                                                     value={item.name}
                                                                     className="task-modal-input hover-effect"
+                                                                    placeholder="Write something..."
                                                                 />
                                                                     <MdDelete onClick={()=> handleDeleteChecklistItem(checklistIdx,itemIdx)} className="checklist-list-delete-btn" size={30}/>
                                                             </div>
