@@ -3,8 +3,12 @@ import { GoChecklist } from "react-icons/go";
 import { MdDelete } from "react-icons/md";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { FaUserCircle } from "react-icons/fa";
+import { FaComment } from "react-icons/fa";
+import {useState} from "react";
 
 function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData}){
+    const [comments,setComments] = useState(null);
 
     function closeTaskModal(){
         setSelectedTask(null)
@@ -16,7 +20,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
         setTodoData(updatedTodoData);
     }
 
-    function handleTaskModalDescriptionChange(value){
+    function handleDescriptionChange(value){
             const updatedTodoData = [...todoData];
             updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].description = value;
             setTodoData(updatedTodoData);
@@ -67,10 +71,23 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
         setTodoData(updatedChecklist);
     }
 
+    function handleSaveComments(){
+        const updatedTodoData = [...todoData];
+        updatedTodoData[selectedTask.listIndex].comments.push(comments);
+        setTodoData(updatedTodoData);
+        setComments("");
+    }
+
+    function handleCancelComments(){
+        setComments("");
+    }
+
     // console.log('value', value);
     return(
         <div id="task_modal" className="task-modal">
             <div className="task-modal-content">
+
+                {/*Main Content Section*/}
                 <div className="task-modal-left-side">
                     <input 
                         onChange={
@@ -84,37 +101,30 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                         value={task.title}
                         placeholder="Enter task name"
                     />
-                    {/*<textarea */}
-                    {/*    onChange={*/}
-                    {/*        function(event){*/}
-                    {/*            return handleTaskModalDescriptionChange(event)*/}
-                    {/*        }*/}
-                    {/*    } */}
-                    {/*    id="modal_task_description"*/}
-                    {/*    className="task-modal-input hover-effect border"*/}
-                    {/*    value={task.description} */}
-                    {/*    rows="4" */}
-                    {/*    placeholder="Enter your task description..."*/}
-                    {/*>*/}
-                    {/*</textarea>*/}
+                    <div className="description-container">
                         <ReactQuill
                             theme="snow"
                             value={task.description}
-                            onChange={handleTaskModalDescriptionChange}
-                            placeholder="Start typing here..."
+                            onChange={handleDescriptionChange}
+                            placeholder="Write description here..."
                         />
+                    </div>
+
+                    {/*Checklist Section Start*/}
                     <div className="checklist-container">
                         {
                             todoData[selectedTask.listIndex].checklists?.map((checklist, checklistIdx) =>
                                 {
-                                    let itemProgress  = 100 / todoData[selectedTask.listIndex].checklists[checklistIdx].items.length * todoData[selectedTask.listIndex].checklists[checklistIdx].items.filter(i => i.isChecked).length;
+                                    let itemProgress  = 100 / todoData[selectedTask.listIndex].checklists[checklistIdx].items?.length * todoData[selectedTask.listIndex].checklists[checklistIdx].items?.filter(i => i.isChecked).length;
                                     if(isNaN(itemProgress)){
                                         itemProgress = 0;
                                     }
                                     return (
                                         <div key={checklistIdx}>
                                             <div className="checklist-title-container">
-                                                <GoChecklist className="checklist-title-icon"/>
+                                                <div>
+                                                    <GoChecklist size={20} className="checklist-title-icon"/>
+                                                </div>
                                                 <div className="checklist-title-input-box">
                                                     <input
                                                         onChange={
@@ -180,7 +190,40 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                             )
                         }
                     </div>
+                    {/*Checklist Section End*/}
+
+                    {/*Comments Section Start*/}
+                    <div className="comment-container">
+                        <div className="comment-title-container">
+                            <div>
+                                <FaComment size={20}/>
+                            </div>
+                            <div className="comment-title">
+                                <p>Comments</p>
+                            </div>
+                        </div>
+                        <div className="comment-input-container">
+                            <div>
+                                <FaUserCircle size={20}/>
+                            </div>
+                            <div className="comment-input">
+                                <ReactQuill
+                                    theme="snow"
+                                    value={comments}
+                                    onChange={setComments}
+                                    placeholder="Write a comment..."
+                                />
+                                <div className="comment-input-btn-container">
+                                    <button onClick={handleSaveComments} className="comment-save-btn">Save</button>
+                                    <button  onClick={handleCancelComments} className="comment-cancel-btn">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/*Comments Section End*/}
                 </div>
+
+                {/* Sidebar Section*/}
                 <div className="task-modal-right-side">
                     <span id="modal_close_btn" onClick={closeTaskModal} className="close">&times;</span>
                     <div>

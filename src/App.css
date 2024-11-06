@@ -112,6 +112,7 @@
     cursor: pointer;
 }
 
+/*------------------------- Task Details modal -----------------------------*/
 .task-modal {
     position: fixed;
     z-index: 1;
@@ -123,7 +124,6 @@
     overflow: auto;
 }
 
-/* Task Modal */
 .task-modal-content {
     display: flex;
     gap: 15px;
@@ -221,6 +221,7 @@
     cursor: pointer;
 }
 
+/*------------------------- Checklist -----------------------------*/
 .checklist-container{
     display: flex;
     flex-direction: column;
@@ -231,9 +232,9 @@
     align-items: center;
     gap: 10px;
 }
-.checklist-title-icon{
-    font-size: 20px;
-}
+/*.checklist-title-icon{*/
+/*    font-size: 20px;*/
+/*}*/
 .checklist-item-container{
     display: flex;
     flex-direction: column;
@@ -259,9 +260,7 @@
 }
 .checklist-item-progress{
     width: 100%;
-
 }
-
 .checklist-title-input-box, .checklist-list-input-box{
     display: flex;
     align-items: center;
@@ -291,38 +290,13 @@
 .border{
     border: 2px solid rgb(118, 118, 118);
 }
-.description-btn-container{
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-.description-save-btn{
-    padding: 7px 10px;
-    background-color: #0c66e4;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-.description-cancel-btn{
-    padding: 7px 10px;
-    background-color: transparent;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-.description-cancel-btn:hover{
-    padding: 7px 10px;
-    background-color: rgb(100, 100, 100);
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-/*------------------------- React quill Customize Style -----------------------------*/
+
+/*------------------------- React quill -----------------------------*/
 .quill {
     border: 2px solid rgb(118, 118, 118);
     border-radius: 5px;
 }
-.ql-container.ql-snow{
+.description-container .quill .ql-container.ql-snow{
     border: none !important;
     height: 200px;
 }
@@ -350,4 +324,73 @@
 }
 .ql-snow .ql-picker-options{
     color: black !important;
+}
+
+/*------------------------- Activity -----------------------------*/
+.comment-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.comment-title-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.comment-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+.comment-title-btn{
+    padding: 7px 10px;
+    background-color: rgb(100, 100, 100);
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+.comment-title-btn:hover, .comment-title-btn:focus{
+    background-color: rgb(120, 120, 120);
+}
+.comment-input-container{
+    display: flex;
+    gap: 10px;
+}
+.comment-input{
+    width: 100%;
+}
+.comment-input .quill .ql-container.ql-snow{
+    border: none !important;
+    height: 100px;
+}
+.comment-input-btn-container{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.comment-save-btn{
+    padding: 7px 10px;
+    background-color: #0c66e4;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+.comment-cancel-btn{
+    padding: 7px 10px;
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+.comment-save-btn:hover{
+    background-color: #4c97fd;
+}
+.comment-cancel-btn:hover{
+    padding: 7px 10px;
+    background-color: rgb(100, 100, 100);
+    border: none;
+    border-radius: 5px;
+    color: white;
 }
