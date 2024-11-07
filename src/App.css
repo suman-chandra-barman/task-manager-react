@@ -148,6 +148,25 @@
     gap: 30px;
     width: 80%;
 }
+.task-modal-title-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.task-modal-title-container input{
+    font-size: 20px;
+}
+.description-container{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+.description-content{
+    width: 100%;
+}
+.description-title{
+    margin-bottom: 20px;
+}
 .task-modal-right-side{
     width: 20%;
     display: flex;
@@ -173,11 +192,9 @@
     width: 150px;
     color: white;
 }
-
 .add-checklist-item-btn:hover, .task-modal-btn:hover, .checklist-delete-btn:hover{
     background-color: rgb(120, 120, 120);
 }
-
 .task-modal-input{
     color: white;
     background-color: transparent;
@@ -204,7 +221,6 @@
 .task-modal-content input:focus, .task-modal-content textarea:focus{
     outline: none;
 }
-
 .close {
     text-align: right;
     color: #aaaaaa;
@@ -213,7 +229,6 @@
     font-weight: bold;
     margin-top: -7px;
 }
-  
 .close:hover,
 .close:focus {
     color: white;
@@ -232,9 +247,6 @@
     align-items: center;
     gap: 10px;
 }
-/*.checklist-title-icon{*/
-/*    font-size: 20px;*/
-/*}*/
 .checklist-item-container{
     display: flex;
     flex-direction: column;
@@ -393,4 +405,33 @@
     border: none;
     border-radius: 5px;
     color: white;
+}
+
+.show-comments-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.show-comments-box{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.show-comments-content{
+    width: 100%;
+}
+.comments{
+    background-color: #2d2c2c;
+    padding: 10px;
+    border-radius: 5px;
+}
+.show-comments-btn-container{
+    font-size: 12px;
+    display: flex;
+    gap: 5px;
+    margin-top:5px
+}
+.comments-btn:hover{
+    text-decoration: underline;
+    cursor: pointer;
 }

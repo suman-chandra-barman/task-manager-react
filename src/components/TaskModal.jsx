@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
-import { GoChecklist } from "react-icons/go";
-import { MdDelete } from "react-icons/md";
+import {Fragment, useState} from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { FaUserCircle } from "react-icons/fa";
-import { FaComment } from "react-icons/fa";
-import {useState} from "react";
+import { FaRegCreditCard, FaComment, FaUserCircle } from "react-icons/fa";
+import { GoChecklist } from "react-icons/go";
+import { MdDelete,MdOutlineDescription  } from "react-icons/md";
+import parse from 'html-react-parser';
 
 function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData}){
     const [comments,setComments] = useState(null);
+    const [editableCommentIndex, setEditableCommentIndex] = useState(-1);
 
     function closeTaskModal(){
         setSelectedTask(null)
@@ -73,13 +74,27 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
 
     function handleSaveComments(){
         const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].comments.push(comments);
+        updatedTodoData[selectedTask.listIndex].comments.unshift(comments);
         setTodoData(updatedTodoData);
-        setComments("");
+        setComments(null);
     }
 
     function handleCancelComments(){
-        setComments("");
+        setComments(null);
+    }
+
+    function handleDeleteComments(index){
+        const updatedTodoData = [...todoData];
+        updatedTodoData[selectedTask.listIndex].comments.splice(index, 1)
+        setTodoData(updatedTodoData);
+    }
+
+    function handleEditComments(index){
+        const updatedTodoData = [...todoData];
+        updatedTodoData[selectedTask.listIndex].comments.splice(index, 1, comments)
+        setTodoData(updatedTodoData);
+        setEditableCommentIndex(-1);
+        setComments(null);
     }
 
     // console.log('value', value);
@@ -89,30 +104,37 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
 
                 {/*Main Content Section*/}
                 <div className="task-modal-left-side">
-                    <input 
-                        onChange={
-                            function(event){
-                                return handleTaskModalTitleChange(event)
+                    <div className="task-modal-title-container">
+                        <FaRegCreditCard size={20} />
+                        <input
+                            onChange={
+                                function (event) {
+                                    return handleTaskModalTitleChange(event)
+                                }
                             }
-                        } 
-                        id="modal_task_title" 
-                        className="task-modal-input border"
-                        type="text"
-                        value={task.title}
-                        placeholder="Enter task name"
-                    />
-                    <div className="description-container">
-                        <ReactQuill
-                            theme="snow"
-                            value={task.description}
-                            onChange={handleDescriptionChange}
-                            placeholder="Write description here..."
+                            id="modal_task_title"
+                            className="task-modal-input border"
+                            type="text"
+                            value={task.title}
+                            placeholder="Enter task name"
                         />
+                    </div>
+                    <div className="description-container">
+                        <MdOutlineDescription size={20} />
+                        <div className='description-content'>
+                            <p className="description-title">Description</p>
+                            <ReactQuill
+                                theme="snow"
+                                value={task.description}
+                                onChange={handleDescriptionChange}
+                                placeholder="Write description here..."
+                            />
+                        </div>
                     </div>
 
                     {/*Checklist Section Start*/}
                     <div className="checklist-container">
-                        {
+                    {
                             todoData[selectedTask.listIndex].checklists?.map((checklist, checklistIdx) =>
                                 {
                                     let itemProgress  = 100 / todoData[selectedTask.listIndex].checklists[checklistIdx].items?.length * todoData[selectedTask.listIndex].checklists[checklistIdx].items?.filter(i => i.isChecked).length;
@@ -209,16 +231,69 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                             <div className="comment-input">
                                 <ReactQuill
                                     theme="snow"
-                                    value={comments}
                                     onChange={setComments}
                                     placeholder="Write a comment..."
                                 />
                                 <div className="comment-input-btn-container">
-                                    <button onClick={handleSaveComments} className="comment-save-btn">Save</button>
+                                    <button type="button" onClick={handleSaveComments} className="comment-save-btn" disabled={!comments || comments==="<p><br></p>"}>Save</button>
                                     <button  onClick={handleCancelComments} className="comment-cancel-btn">Cancel</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="show-comments-container">
+                        {todoData[selectedTask.listIndex].comments.length ?
+                            todoData[selectedTask.listIndex].comments.map((comment,index) =>
+                                <Fragment key={index}>
+                                    {editableCommentIndex === index ?
+                                        <div className="comment-input-container">
+                                            <div>
+                                                <FaUserCircle size={20}/>
+                                            </div>
+                                            <div className="comment-input">
+                                                <ReactQuill
+                                                    theme="snow"
+                                                    defaultValue={todoData[selectedTask.listIndex].comments[index]}
+                                                    onChange={setComments}
+                                                    placeholder="Write a comment..."
+                                                />
+                                                <div className="comment-input-btn-container">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleEditComments(index)}
+                                                        className="comment-save-btn"
+                                                        disabled={!comments || comments === "<p><br></p>"}
+                                                    >
+                                                        Save
+                                                    </button>
+                                                    <button onClick={handleCancelComments}
+                                                            className="comment-cancel-btn">Cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        : <div className="show-comments-box">
+                                            <FaUserCircle size={20}/>
+                                            <div className="show-comments-content">
+                                                <div className="comments">
+                                                    {parse(todoData[selectedTask.listIndex].comments[index])}
+                                                </div>
+                                                <div className="show-comments-btn-container">
+                                                    <span onClick={() => setEditableCommentIndex(index)}
+                                                          className="comments-btn">Edit</span>
+                                                    <span onClick={() => handleDeleteComments(index)}
+                                                          className="comments-btn">Delete</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </Fragment>
+                            )
+                            :
+                            <div>
+                                No comments
+                            </div>
+                        }
                     </div>
                     {/*Comments Section End*/}
                 </div>
