@@ -28,7 +28,7 @@ function TodoList(
 
     function handleAddTask(){
         const updatedTodoData = [...todoData];
-        updatedTodoData[lIdx].tasks.push({title:"", description:""});
+        updatedTodoData[lIdx].tasks.push({title:"", description:"", checklists:[],comments:[]});
         setTodoData(updatedTodoData)
     }
 

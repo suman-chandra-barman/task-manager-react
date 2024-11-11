@@ -36,8 +36,7 @@ function App(){
 
  function handleAddList(){
   const updatedTodoData = [...todoData];
-  updatedTodoData.push({title:"", tasks:[], checklists:[],comments:[]});
-
+  updatedTodoData.push({title:"", tasks:[]});
   setTodoData(updatedTodoData);
  }
 

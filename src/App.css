@@ -415,7 +415,7 @@
 .show-comments-box{
     display: flex;
     gap: 10px;
-    align-items: center;
+    align-items: baseline;
 }
 .show-comments-content{
     width: 100%;
