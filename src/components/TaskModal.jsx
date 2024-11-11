@@ -83,6 +83,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
     function handleCancelComments(){
         setComments(null);
         setShowComments(null);
+        setEditableCommentIndex(-1);
     }
 
     function handleDeleteComments(index){
@@ -99,7 +100,8 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
         setShowComments(null);
     }
 
-    console.log('data', todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex]);
+    console.log('comments', todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments);
+
     return(
         <div id="task_modal" className="task-modal">
             <div className="task-modal-content">
@@ -254,7 +256,8 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                             <div className="comment-input">
                                                 <ReactQuill
                                                     theme="snow"
-                                                    value={showComments}
+                                                    // value={showComments}
+                                                    defaultValue={todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments[index]}
                                                     onChange={setShowComments}
                                                     placeholder="Write a comment..."
                                                 />
@@ -263,7 +266,6 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                                         type="button"
                                                         onClick={() => handleEditComments(index)}
                                                         className="comment-save-btn"
-                                                        disabled={!comments || comments === "<p><br></p>"}
                                                     >
                                                         Save
                                                     </button>
@@ -289,11 +291,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                         </div>
                                     }
                                 </Fragment>
-                            )
-                            :
-                            <div>
-                                No comments available!
-                            </div>
+                            ) : <></>
                         }
                     </div>
                     {/*Comments Section End*/}
