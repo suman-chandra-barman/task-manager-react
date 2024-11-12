@@ -2,29 +2,13 @@
 /* eslint-disable react/prop-types */
 import { Fragment, useState } from "react";
 
-function TodoList(
-        {
-            todo,
-            lIdx, 
-            listDomRefs,
-            taskDomRefs, 
-            todoData, 
-            draggedElement, 
-            targetedTaskIndex,
-            setTodoData, 
-            setSelectedTask, 
-            setDraggedElement, 
-            setTargetedListIndex,
-            setTargetedTaskIndex
-        }
-    ){
+function TodoList({todo, lIdx, listDomRefs, taskDomRefs, todoData, draggedElement, targetedTaskIndex, setTodoData, setSelectedTask, setDraggedElement, setTargetedListIndex, setTargetedTaskIndex}){
     const [divRect,setDivRect] = useState();
     const [isListDrag, setIsListDrag] = useState(false);
     const [isTaskDrag, setIsTaskDrag] = useState(false);
     const [dragStyle, setDragStyle] = useState({});
     const [taskDragStyle, setTaskDragStyle] = useState({});
     const [nativeOffset, setNativeOffset] = useState();
-
 
     function handleAddTask(){
         const updatedTodoData = [...todoData];
