@@ -1,5 +1,39 @@
 .main-container{
+    display: flex;
+    gap: 10px;
+    padding: 20px 20px 0 20px;
     height: 100vh;
+}
+
+/*    sidebar       */
+.sidebar-container{
+    padding: 10px;
+    border: 1px solid black;
+}
+.sidebar-header{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.add-board-btn{
+    padding: 15px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+.sidebar-manu{
+    padding: 10px;
+    cursor: pointer;
+}
+.sidebar-manu:hover{
+    background-color: rgb(120, 120, 120);
+}
+
+
+.board-container{
     padding: 20px 20px 0 20px;
     display: flex;
     flex-direction: column;
