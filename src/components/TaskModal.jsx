@@ -7,7 +7,7 @@ import { GoChecklist } from "react-icons/go";
 import { MdDelete,MdOutlineDescription  } from "react-icons/md";
 import parse from 'html-react-parser';
 
-function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData}){
+function TaskModal({task, selectedTask, setSelectedTask, taskLists, setBoards, boardIndex}){
     const [comments,setComments] = useState(null);
     const [showComments,setShowComments] = useState(null);
     const [editableCommentIndex, setEditableCommentIndex] = useState(-1);
@@ -17,66 +17,106 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
     }
 
     function handleTaskModalTitleChange(e){
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].title = e.target.value;
-        setTodoData(updatedTodoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].title = e.target.value;
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
     }
 
     function handleDescriptionChange(value){
-            const updatedTodoData = [...todoData];
-            updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].description = value;
-            setTodoData(updatedTodoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].description = value;
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
 
     }
 
     function handleAddChecklist(){
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists.push({name:"Checklist", items:[]});
-        setTodoData(updatedTodoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists.push({name:"Checklist", items:[]});
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
 
     }
 
     function handleChecklistItem(checklistIdx) {
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items.push({name:"", isChecked:false});
-        setTodoData(updatedTodoData);
-        console.log(todoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items.push({name:"", isChecked:false});
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
+        console.log(taskLists);
     }
 
     function handleChecklistTitleChange(e,checklistIdx){
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].name = e.target.value;
-        setTodoData(updatedTodoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].name = e.target.value;
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
     }
 
     function handleChecklistItemChange(e,checklistIdx,itemIdx){
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items[itemIdx].name = e.target.value;
-        setTodoData(updatedTodoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items[itemIdx].name = e.target.value;
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
     }
 
     function handleChecklistItemCheckboxStatusChange(e,checklistIdx,itemIdx){
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items[itemIdx].isChecked = e.target.checked;
-        setTodoData(updatedTodoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items[itemIdx].isChecked = e.target.checked;
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
     }
 
     function handleDeleteChecklist(checklistIdx){
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].checklists.splice(checklistIdx, 1);
-        setTodoData(updatedTodoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].checklists.splice(checklistIdx, 1);
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
     }
 
     function handleDeleteChecklistItem(checklistIdx, itemIdx){
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items.splice(itemIdx, 1);
-        setTodoData(updatedTodoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items.splice(itemIdx, 1);
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
     }
 
     function handleSaveComments(){
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments.unshift(comments);
-        setTodoData(updatedTodoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments.unshift(comments);
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
         setComments(null);
     }
 
@@ -87,20 +127,28 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
     }
 
     function handleDeleteComments(index){
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments.splice(index, 1)
-        setTodoData(updatedTodoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments.splice(index, 1)
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
     }
 
     function handleEditComments(index){
-        const updatedTodoData = [...todoData];
-        updatedTodoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments.splice(index, 1, showComments)
-        setTodoData(updatedTodoData);
+        const updatedTaskLists = [...taskLists];
+        updatedTaskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments.splice(index, 1, showComments)
+        setBoards((state) => {
+            let newState = [...state];
+            newState[boardIndex].taskLists = updatedTaskLists;
+            return newState;
+        });
         setEditableCommentIndex(-1);
         setShowComments(null);
     }
 
-    console.log('comments', todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments);
+    console.log('comments', taskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments);
 
     return(
         <div id="task_modal" className="task-modal">
@@ -138,81 +186,81 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
 
                     {/*Checklist Section Start*/}
                     <div className="checklist-container">
-                    {todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists?.map((checklist, checklistIdx) =>
-                        {
-                            let itemProgress  = 100 / todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items?.length * todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items?.filter(i => i.isChecked).length;
-                            if(isNaN(itemProgress)){
-                                itemProgress = 0;
-                            }
-                            return (
-                                <div key={checklistIdx}>
-                                    <div className="checklist-title-container">
-                                        <div>
-                                            <GoChecklist size={20} className="checklist-title-icon"/>
-                                        </div>
-                                        <div className="checklist-title-input-box">
-                                            <input
-                                                onChange={
-                                                    function (event) {
-                                                        return handleChecklistTitleChange(event, checklistIdx);
+                        {taskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists?.map((checklist, checklistIdx) =>
+                            {
+                                let itemProgress  = 100 / taskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items?.length * taskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items?.filter(i => i.isChecked).length;
+                                if(isNaN(itemProgress)){
+                                    itemProgress = 0;
+                                }
+                                return (
+                                    <div key={checklistIdx}>
+                                        <div className="checklist-title-container">
+                                            <div>
+                                                <GoChecklist size={20} className="checklist-title-icon"/>
+                                            </div>
+                                            <div className="checklist-title-input-box">
+                                                <input
+                                                    onChange={
+                                                        function (event) {
+                                                            return handleChecklistTitleChange(event, checklistIdx);
+                                                        }
                                                     }
-                                                }
-                                                type="text"
-                                                value={checklist.name}
-                                                className="task-modal-input border"
-                                                placeholder="Write checklist name"
-                                            />
-                                            <button onClick={() => handleDeleteChecklist(checklistIdx)} className="checklist-delete-btn">Delete</button>
+                                                    type="text"
+                                                    value={checklist.name}
+                                                    className="task-modal-input border"
+                                                    placeholder="Write checklist name"
+                                                />
+                                                <button onClick={() => handleDeleteChecklist(checklistIdx)} className="checklist-delete-btn">Delete</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="checklist-item-progress-container">
+                                        <div className="checklist-item-progress-container">
                                         <span
                                             className="">{Math.round(itemProgress)}%</span>
-                                        <progress
-                                            className='checklist-item-progress'
-                                            value={itemProgress}
-                                            max={100}
-                                        >
-                                        </progress>
-                                    </div>
-                                    <div className="checklist-item-container">
-                                        {
-                                            todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items?.map((item, itemIdx) =>
-                                                <div key={itemIdx} className="checklist-item">
-                                                    <input
-                                                        onChange={
-                                                            function (event) {
-                                                                return handleChecklistItemCheckboxStatusChange(event, checklistIdx, itemIdx);
-                                                            }
-                                                        }
-                                                        type="checkbox"
-                                                        className="checklist-item-checkbox task-modal-input"
-                                                        checked={item.isChecked}
-                                                    />
-                                                    <div className="checklist-list-input-box">
+                                            <progress
+                                                className='checklist-item-progress'
+                                                value={itemProgress}
+                                                max={100}
+                                            >
+                                            </progress>
+                                        </div>
+                                        <div className="checklist-item-container">
+                                            {
+                                                taskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items?.map((item, itemIdx) =>
+                                                    <div key={itemIdx} className="checklist-item">
                                                         <input
                                                             onChange={
                                                                 function (event) {
-                                                                    return handleChecklistItemChange(event, checklistIdx, itemIdx);
+                                                                    return handleChecklistItemCheckboxStatusChange(event, checklistIdx, itemIdx);
                                                                 }
                                                             }
-                                                            type="text"
-                                                            value={item.name}
-                                                            className="task-modal-input hover-effect"
-                                                            placeholder="Write something..."
+                                                            type="checkbox"
+                                                            className="checklist-item-checkbox task-modal-input"
+                                                            checked={item.isChecked}
                                                         />
+                                                        <div className="checklist-list-input-box">
+                                                            <input
+                                                                onChange={
+                                                                    function (event) {
+                                                                        return handleChecklistItemChange(event, checklistIdx, itemIdx);
+                                                                    }
+                                                                }
+                                                                type="text"
+                                                                value={item.name}
+                                                                className="task-modal-input hover-effect"
+                                                                placeholder="Write something..."
+                                                            />
                                                             <MdDelete onClick={()=> handleDeleteChecklistItem(checklistIdx,itemIdx)} className="checklist-list-delete-btn" size={30}/>
-                                                    </div>
-                                                </div>)
-                                        }
-                                        <button onClick={() => handleChecklistItem(checklistIdx)}
-                                                className="add-checklist-item-btn">Add an item
-                                        </button>
+                                                        </div>
+                                                    </div>)
+                                            }
+                                            <button onClick={() => handleChecklistItem(checklistIdx)}
+                                                    className="add-checklist-item-btn">Add an item
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        }
-                     )}
+                                )
+                            }
+                        )}
                     </div>
                     {/*Checklist Section End*/}
 
@@ -245,8 +293,8 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                         </div>
                     </div>
                     <div className="show-comments-container">
-                        {todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments.length ?
-                            todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments.map((comment,index) =>
+                        {taskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments.length ?
+                            taskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments.map((comment,index) =>
                                 <Fragment key={index}>
                                     {editableCommentIndex === index ?
                                         <div className="comment-input-container">
@@ -257,7 +305,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                                 <ReactQuill
                                                     theme="snow"
                                                     // value={showComments}
-                                                    defaultValue={todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments[index]}
+                                                    defaultValue={taskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments[index]}
                                                     onChange={setShowComments}
                                                     placeholder="Write a comment..."
                                                 />
@@ -279,7 +327,7 @@ function TaskModal({task, selectedTask, setSelectedTask, todoData, setTodoData})
                                             <FaUserCircle size={20}/>
                                             <div className="show-comments-content">
                                                 <div className="comments">
-                                                    {parse(todoData[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments[index])}
+                                                    {parse(taskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].comments[index])}
                                                 </div>
                                                 <div className="show-comments-btn-container">
                                                     <span onClick={() => setEditableCommentIndex(index)}
