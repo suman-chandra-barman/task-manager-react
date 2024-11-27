@@ -198,7 +198,7 @@ function TaskModal({task, selectedTask, setSelectedTask, taskLists, setBoards, b
                                             <div>
                                                 <GoChecklist size={20} className="checklist-title-icon"/>
                                             </div>
-                                            <div className="checklist-title-input-box">
+                                            <div className="checklist-list-input-box">
                                                 <input
                                                     onChange={
                                                         function (event) {
@@ -207,10 +207,12 @@ function TaskModal({task, selectedTask, setSelectedTask, taskLists, setBoards, b
                                                     }
                                                     type="text"
                                                     value={checklist.name}
-                                                    className="task-modal-input border"
+                                                    className="task-modal-input hover-effect"
                                                     placeholder="Write checklist name"
                                                 />
-                                                <button onClick={() => handleDeleteChecklist(checklistIdx)} className="checklist-delete-btn">Delete</button>
+                                                <div onClick={() => handleDeleteChecklist(checklistIdx)} className="icon-btn">
+                                                    < MdDelete size={20} />
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="checklist-item-progress-container">
@@ -249,7 +251,9 @@ function TaskModal({task, selectedTask, setSelectedTask, taskLists, setBoards, b
                                                                 className="task-modal-input hover-effect"
                                                                 placeholder="Write something..."
                                                             />
-                                                            <MdDelete onClick={()=> handleDeleteChecklistItem(checklistIdx,itemIdx)} className="checklist-list-delete-btn" size={30}/>
+                                                            <div onClick={()=> handleDeleteChecklistItem(checklistIdx,itemIdx)} className="icon-btn checklist-list-delete-btn">
+                                                                <MdDelete  size={20}/>
+                                                            </div>
                                                         </div>
                                                     </div>)
                                             }

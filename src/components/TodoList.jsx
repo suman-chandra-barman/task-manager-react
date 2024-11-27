@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Fragment, useState } from "react";
+import { FaEye, FaPlus } from "react-icons/fa";
 
 function TodoList(
     {
@@ -366,16 +367,16 @@ function TodoList(
                                     className="task-input" placeholder="Enter Task Name"
                                     value={todo.tasks[tIdx].title}
                                 />
-                                <button
+                                <div
                                     onClick={
                                         function(){
                                             return openTaskModal(lIdx, tIdx);
                                         }
                                     }
-                                    className="task-details-btn"
+                                    className="icon-btn"
                                 >
-                                    Details
-                                </button>
+                                  <FaEye/>
+                                </div>
                             </div>
                         </Fragment>
                     )
@@ -386,7 +387,10 @@ function TodoList(
                         :<></>
                 }
             </div>
-            <button onClick={handleAddTask} className="todo-btn add-task-btn">+Add New Task</button>
+            <button onClick={handleAddTask} className="todo-btn add-task-btn">
+                <FaPlus/>
+                New Task
+            </button>
         </div>
     )
 }

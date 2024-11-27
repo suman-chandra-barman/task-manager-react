@@ -1,40 +1,145 @@
-.main-container{
-    display: flex;
-    gap: 10px;
-    padding: 20px 20px 0 20px;
+.container-wrapper{
     height: 100vh;
+    display: flex;
+}
+.empty-board{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 30px;
+    font-weight: 600;
 }
 
-/*    sidebar       */
+
+/*  ----------------  sidebar -------------------      */
 .sidebar-container{
-    padding: 10px;
     border: 1px solid black;
+    background-color: black;
+    opacity: 0.6;
+    color: white;
+    min-width: 250px;
+    position: relative;
+    transition: width 0.3s ease;
 }
 .sidebar-header{
     display: flex;
-    gap: 20px;
     align-items: center;
-    margin-bottom: 10px;
+    justify-content: space-between;
+    padding: 0 10px;
+    height: 70px;
+    position: relative;
+    border-bottom: 1px solid rgb(120, 120, 120);
+}
+.sidebar-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+    font-size: 14px;
 }
 .add-board-btn{
-    padding: 15px;
-    background-color: black;
-    color: white;
+    padding: 5px;
+    background-color:transparent;
+    cursor: pointer;
+
+}
+.add-board-btn:hover{
+    padding: 5px;
+    background-color: rgb(120, 120, 120);
     border-radius: 5px;
     cursor: pointer;
+}
+.add-board-container{
+    background-color: rgb(66, 63, 63);;
+    padding: 10px;
+    position: absolute;
+    top: 50px;
+    left: 130px;
+    border-radius: 10px;
+    min-width: 250px;
+}
+.add-board-title-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.add-board-input{
+    padding: 10px;
+    margin: 10px 0;
+    background-color: transparent;
+    border: 2px solid rgb(120, 120, 120);
+    width: 100%;
+    color: white;
+}
+.add-board-input:focus{
+    border: 2px solid rgb(120, 120, 120);
+}
+.add-board-btns{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.add-board-close-btn{
+    font-weight: bold;
+    cursor: pointer;
+    color: #aaaaaa;
+}
+.add-board-close-btn:hover{
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.add-board-save-btn{
+    padding: 7px 10px;
+    background-color: #0c66e4;
     border: none;
+    border-radius: 5px;
+    color: white;
 }
 .sidebar-manu{
-    padding: 10px;
+    padding: 5px 10px;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.active-sidebar-manu{
+    background-color: rgb(150, 150, 150);
 }
 .sidebar-manu:hover{
     background-color: rgb(120, 120, 120);
 }
+.delete-bord-btn:hover{
+    padding: 5px;
+    background-color: rgb(150, 150, 150);
+}
+.collapsed{
+    background-color: black;
+    opacity: 0.6;
+    color: white;
+}
+.sidebar-expand{
+    cursor: pointer;
+    height: 100%;
+}
+.sidebar-expand:hover{
+    background-color:rgba(120, 120, 120);
+}
+.sidebar-expand-btn{
+    transform: translate(10px, 23px);
+    height: 25px;
+    border: none;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    padding: 2px;
+    cursor: pointer;
+}
 
-
-.board-container{
-    padding: 20px 20px 0 20px;
+/*--------------main part-------------- */
+.main-container{
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
@@ -42,6 +147,13 @@
 .header-container{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 0 10px;
+    border-bottom: 1px solid rgba(120, 120, 120);
+    background-color: white;
+    color: black;
+    opacity: 0.8;
 }
 
 .theme-btn{
@@ -55,8 +167,7 @@
     flex-grow: 1;
     align-items: flex-start;
     gap: 1rem;
-    margin: 10px 0;
-    padding-bottom: 10px;
+    padding: 20px 10px;
     overflow-x: auto;
     scrollbar-width: thin;
 }
@@ -69,25 +180,31 @@
     border-radius: 10px;
     min-width: 300px;
     max-height: 100%;
-    padding: 5px;
+    padding: 10px;
 }
 
 .task-container{
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 5px;
+    gap: 8px;
+    padding: 8px 0;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color:   rgb(66, 63, 63) transparent;
 }
 
 .list-title-input{
-    background-color: black;
     color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
+    background-color: black;
+    border: 1px solid transparent;
+    padding: 15px;
+}
+.list-title-input:focus{
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: #1D2125;
+    padding: 15px;
 }
 
 .list-title-input:focus, .task-input:focus{
@@ -106,10 +223,12 @@
     background-color: black;
     color: white;
     border-radius: 5px;
-    margin-top: 10px;
-    border: none;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
 }
-
 .add-list-btn{
     min-width: 200px;
 }
@@ -119,7 +238,7 @@
 }
 
 .add-task-btn:hover, #add_list_btn:hover{
-    background-color: rgb(66, 63, 63);
+    background-color: #1D2125
 }
 
 .task-name{
@@ -128,11 +247,12 @@
 
 .task-card{
     display: flex;
-    background-color: rgb(66, 63, 63);
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1D2125;
     padding: 5px;
     border-radius: 5px;
     border: 1px solid transparent;
-    justify-content: space-between;
 }
 
 .task-card:hover{
@@ -140,9 +260,14 @@
 }
 
 .task-details-btn, .task-save-btn{
-    color: white;
+    padding: 5px;
+    cursor: pointer;
     background-color: transparent;
-    padding: 8px 8px;
+}
+.task-details-btn:hover{
+    padding: 5px;
+    background-color: rgb(120, 120, 120);
+    border-radius: 5px;
     cursor: pointer;
 }
 
@@ -161,13 +286,13 @@
 .task-modal-content {
     display: flex;
     gap: 15px;
-    background-color: rgb(66, 63, 63);
+    background-color: #2D343B;
     color: white;
     margin: auto;
-    padding:  15px;
-    border: 1px solid #888;
+    padding:  40px 20px;
+    border: 1px solid rgba(120, 120, 120);
     border-radius: 10px;
-    width: 80%;
+    width: 60%;
     min-width: 400px;
 }
 .task-modal-main-content{
@@ -189,6 +314,11 @@
 }
 .task-modal-title-container input{
     font-size: 20px;
+    border: 2px solid transparent;
+    font-weight: 600;
+}
+.task-modal-title-container input:focus{
+   border: 2px solid rgb(120, 120, 120);
 }
 .description-container{
     display: flex;
@@ -242,10 +372,10 @@
 }
 .hover-effect:focus{
     background-color: transparent;
-    border: 2px solid rgb(118, 118, 118);
+    border: 2px solid rgb(120, 120, 120);
 }
 .focus-effect:focus{
-    border: 2px solid rgb(118, 118, 118);
+    border: 2px solid rgb(120, 120, 120);
 }
 
 .task-modal-content textarea{
@@ -325,21 +455,16 @@
     right: 3px;
 }
 .checklist-list-delete-btn{
-    padding:3px;
     position: absolute;
     right: 3px;
-    color: indianred;
-}
-.checklist-list-delete-btn:hover{
-    color: red;
 }
 .border{
-    border: 2px solid rgb(118, 118, 118);
+    border: 2px solid rgb(120, 120, 120);
 }
 
 /*------------------------- React quill -----------------------------*/
 .quill {
-    border: 2px solid rgb(118, 118, 118);
+    border: 2px solid rgb(120, 120, 120);
     border-radius: 5px;
 }
 .description-container .quill .ql-container.ql-snow{
@@ -455,7 +580,7 @@
     width: 100%;
 }
 .comments{
-    background-color: #2d2c2c;
+    background-color: black;
     padding: 10px;
     border-radius: 5px;
 }
@@ -468,4 +593,15 @@
 .comments-btn:hover{
     text-decoration: underline;
     cursor: pointer;
+}
+
+
+.icon-btn{
+    padding: 5px;
+    background-color: transparent;
+    cursor: pointer;
+}
+.icon-btn:hover{
+    background-color: rgb(150, 150, 150);
+    border-radius: 5px;
 }
