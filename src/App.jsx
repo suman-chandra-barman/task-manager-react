@@ -20,8 +20,9 @@ function App(){
     const [boardIndex, setBoardIndex] = useState(0);
     const [targetedListIndex, setTargetedListIndex] = useState(null);
     const [targetedTaskIndex, setTargetedTaskIndex] = useState(null);
-    const [themeState,  setThemeState] = useLocalStorage("theme", theme.light);
     const [isCollapsed, setIsCollapsed] = useState(false);
+
+    const [themeState,  setThemeState] = useLocalStorage("theme", theme.light);
 
     const listDomRefs = useRef(new Array());
     const taskDomRefs = useRef(new Array());

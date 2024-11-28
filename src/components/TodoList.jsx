@@ -328,63 +328,59 @@ function TodoList(
                 placeholder="Enter List Name"
             />
             <div className="task-container">
-                {
-                    todo.tasks.map((_, tIdx) =>
-                        <Fragment key={tIdx}>
-                            {
-                                targetedTaskIndex?.lIndex === lIdx && targetedTaskIndex?.tIndex === tIdx ?
-                                    <div className="task-card" style={{minHeight:"48px", backgroundColor:"gray"}}></div>
-                                    :<></>
+                {todo.tasks.map((_, tIdx) =>
+                    <Fragment key={tIdx}>
+                        {targetedTaskIndex?.lIndex === lIdx && targetedTaskIndex?.tIndex === tIdx ?
+                            <div className="task-card" style={{minHeight:"48px", backgroundColor:"gray"}}></div>
+                            :<></>
+                        }
+                        <div
+                            draggable="true"
+                            ref={(el) => {
+                                if(tIdx === 0){
+                                    taskDomRefs.current[lIdx]=[];
+                                }
+                                taskDomRefs.current[lIdx][tIdx] = el;
+                            }}
+                            onDrag={
+                                function(event){
+                                    return handleTaskDrag(event, tIdx);
+                                }
                             }
+                            onDragEnd={
+                                function(event){
+                                    return handleTaskDragEnd(event, tIdx)
+                                }
+                            }
+                            className="task-card"
+                            style={isTaskDrag && draggedElement.lIndex === lIdx && draggedElement.tIndex === tIdx ? taskDragStyle : {}}
+                        >
+                            <input
+                                onChange={
+                                    function(event){
+                                        return handleTaskChange(event, tIdx)
+                                    }
+                                }
+                                type="text"
+                                className="task-input" placeholder="Enter Task Name"
+                                value={todo.tasks[tIdx].title}
+                            />
                             <div
-                                draggable="true"
-                                ref={(el) => {
-                                    if(tIdx === 0){
-                                        taskDomRefs.current[lIdx]=[];
-                                    }
-                                    taskDomRefs.current[lIdx][tIdx] = el;
-                                }}
-                                onDrag={
-                                    function(event){
-                                        return handleTaskDrag(event, tIdx);
+                                onClick={
+                                    function(){
+                                        return openTaskModal(lIdx, tIdx);
                                     }
                                 }
-                                onDragEnd={
-                                    function(event){
-                                        return handleTaskDragEnd(event, tIdx)
-                                    }
-                                }
-                                className="task-card"
-                                style={isTaskDrag && draggedElement.lIndex === lIdx && draggedElement.tIndex === tIdx ? taskDragStyle : {}}
+                                className="icon-btn"
                             >
-                                <input
-                                    onChange={
-                                        function(event){
-                                            return handleTaskChange(event, tIdx)
-                                        }
-                                    }
-                                    type="text"
-                                    className="task-input" placeholder="Enter Task Name"
-                                    value={todo.tasks[tIdx].title}
-                                />
-                                <div
-                                    onClick={
-                                        function(){
-                                            return openTaskModal(lIdx, tIdx);
-                                        }
-                                    }
-                                    className="icon-btn"
-                                >
-                                  <FaEye/>
-                                </div>
+                              <FaEye/>
                             </div>
-                        </Fragment>
-                    )
-                }
-                {
-                    targetedTaskIndex?.lIndex === lIdx && targetedTaskIndex?.tIndex === todo.tasks.length ?
-                        <div className="task-card" style={{minHeight:"48px", backgroundColor:"gray"}}></div>
-                        :<></>
+                        </div>
+                    </Fragment>
+                )}
+                {targetedTaskIndex?.lIndex === lIdx && targetedTaskIndex?.tIndex === todo.tasks.length ?
+                    <div className="task-card" style={{minHeight:"48px", backgroundColor:"gray"}}></div>
+                    :<></>
                 }
             </div>
             <button onClick={handleAddTask} className="todo-btn add-task-btn">
