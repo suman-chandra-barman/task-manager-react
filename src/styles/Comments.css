@@ -1,0 +1,96 @@
+.comment-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.comment-title-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.comment-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+.comment-title-btn{
+    padding: 7px 10px;
+    background-color: rgb(100, 100, 100);
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+.comment-title-btn:hover, .comment-title-btn:focus{
+    background-color: rgb(120, 120, 120);
+}
+.comment-input-container{
+    display: flex;
+    gap: 10px;
+}
+.comment-input{
+    width: 100%;
+}
+.comment-input .quill .ql-container.ql-snow{
+    border: none !important;
+    height: 100px;
+}
+.comment-input-btn-container{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.comment-save-btn{
+    padding: 7px 10px;
+    background-color: #0c66e4;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+.comment-cancel-btn{
+    padding: 7px 10px;
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+.comment-save-btn:hover{
+    background-color: #4c97fd;
+}
+.comment-cancel-btn:hover{
+    padding: 7px 10px;
+    background-color: rgb(100, 100, 100);
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.show-comments-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.show-comments-box{
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+}
+.show-comments-content{
+    width: 100%;
+}
+.comments{
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
+}
+.show-comments-btn-container{
+    font-size: 12px;
+    display: flex;
+    gap: 5px;
+    margin-top:5px
+}
+.comments-btn:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}

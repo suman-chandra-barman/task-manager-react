@@ -1,3 +1,4 @@
+import "../styles/Comments.css";
 import {FaComment, FaUserCircle} from "react-icons/fa";
 import ReactQuill from "react-quill";
 import {Fragment, useState} from "react";

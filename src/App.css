@@ -10,140 +10,11 @@
     font-size: 30px;
     font-weight: 600;
 }
-
-
-/*  ----------------  sidebar -------------------      */
-.sidebar-container{
-    border: 1px solid black;
-    background-color: black;
-    opacity: 0.6;
-    color: white;
-    min-width: 250px;
-    position: relative;
-    transition: width 0.3s ease;
-}
-.sidebar-header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-    height: 70px;
-    position: relative;
-    border-bottom: 1px solid rgb(120, 120, 120);
-}
-.sidebar-title{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px 10px;
-    font-size: 14px;
-}
-.add-board-btn{
-    padding: 5px;
-    background-color:transparent;
-    cursor: pointer;
-
-}
-.add-board-btn:hover{
-    padding: 5px;
-    background-color: rgb(120, 120, 120);
-    border-radius: 5px;
-    cursor: pointer;
-}
-.add-board-container{
-    background-color: rgb(66, 63, 63);;
-    padding: 10px;
-    position: absolute;
-    top: 50px;
-    left: 130px;
-    border-radius: 10px;
-    min-width: 250px;
-}
-.add-board-title-container{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-.add-board-input{
-    padding: 10px;
-    margin: 10px 0;
-    background-color: transparent;
-    border: 2px solid rgb(120, 120, 120);
-    width: 100%;
-    color: white;
-}
-.add-board-input:focus{
-    border: 2px solid rgb(120, 120, 120);
-}
-.add-board-btns{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.add-board-close-btn{
-    font-weight: bold;
-    cursor: pointer;
-    color: #aaaaaa;
-}
-.add-board-close-btn:hover{
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-.add-board-save-btn{
-    padding: 7px 10px;
-    background-color: #0c66e4;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-.sidebar-manu{
-    padding: 5px 10px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.active-sidebar-manu{
-    background-color: rgb(150, 150, 150);
-}
-.sidebar-manu:hover{
-    background-color: rgb(120, 120, 120);
-}
-.delete-bord-btn:hover{
-    padding: 5px;
-    background-color: rgb(150, 150, 150);
-}
-.collapsed{
-    background-color: black;
-    opacity: 0.6;
-    color: white;
-}
-.sidebar-expand{
-    cursor: pointer;
-    height: 100%;
-}
-.sidebar-expand:hover{
-    background-color:rgba(120, 120, 120);
-}
-.sidebar-expand-btn{
-    transform: translate(10px, 23px);
-    height: 25px;
-    border: none;
-    border-radius: 50%;
-    aspect-ratio: 1;
-    padding: 2px;
-    cursor: pointer;
-}
-
-/*--------------main part-------------- */
 .main-container{
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
-
 .header-container{
     display: flex;
     justify-content: space-between;
@@ -155,13 +26,11 @@
     color: black;
     opacity: 0.8;
 }
-
 .theme-btn{
     width: 60px;
     padding: 5px 10px;
     border-radius: 20px;
 }
-
 .todo-container{
     display: flex;
     flex-grow: 1;
@@ -171,7 +40,6 @@
     overflow-x: auto;
     scrollbar-width: thin;
 }
-
 .list{
     display: flex;
     flex-direction: column;
@@ -182,35 +50,6 @@
     max-height: 100%;
     padding: 10px;
 }
-
-.task-container{
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 8px 0;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color:   rgb(66, 63, 63) transparent;
-}
-
-.list-title-input{
-    color: white;
-    background-color: black;
-    border: 1px solid transparent;
-    padding: 15px;
-}
-.list-title-input:focus{
-    color: white;
-    border: 1px solid white;
-    border-radius: 5px;
-    background-color: #1D2125;
-    padding: 15px;
-}
-
-.list-title-input:focus, .task-input:focus{
-    outline: none;
-}
-
 .task-input{
     background-color: transparent;
     padding: 10px;
@@ -233,132 +72,6 @@
     min-width: 200px;
 }
 
-.add-task-btn{
-    text-align: left;
-}
-
-.add-task-btn:hover, #add_list_btn:hover{
-    background-color: #1D2125
-}
-
-.task-name{
-    border: 1px solid black;
-}
-
-.task-card{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1D2125;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid transparent;
-}
-
-.task-card:hover{
-    border: 1px solid white;
-}
-
-.task-details-btn, .task-save-btn{
-    padding: 5px;
-    cursor: pointer;
-    background-color: transparent;
-}
-.task-details-btn:hover{
-    padding: 5px;
-    background-color: rgb(120, 120, 120);
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/*------------------------- Task Details modal -----------------------------*/
-.task-modal {
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-}
-
-.task-modal-content {
-    display: flex;
-    gap: 15px;
-    background-color: #2D343B;
-    color: white;
-    margin: auto;
-    padding:  40px 20px;
-    border: 1px solid rgba(120, 120, 120);
-    border-radius: 10px;
-    width: 60%;
-    min-width: 400px;
-}
-.task-modal-main-content{
-    display: flex;
-    gap: 10px;
-    width: 95%;
-}
-
-.task-modal-left-side{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    width: 80%;
-}
-.task-modal-title-container{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.task-modal-title-container input{
-    font-size: 20px;
-    border: 2px solid transparent;
-    font-weight: 600;
-}
-.task-modal-title-container input:focus{
-   border: 2px solid rgb(120, 120, 120);
-}
-.description-container{
-    display: flex;
-    gap: 10px;
-    width: 100%;
-}
-.description-content{
-    width: 100%;
-}
-.description-title{
-    margin-bottom: 20px;
-}
-.task-modal-right-side{
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.task-modal-btn{
-    padding: 10px 20px;
-    width: 100%;
-    background-color: rgb(100, 100, 100);
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-
-.add-checklist-item-btn{
-    margin-left: 28px;
-    padding: 10px 20px;
-    background-color: rgb(100, 100, 100);
-    border: none;
-    border-radius: 5px;
-    width: 150px;
-    color: white;
-}
-.add-checklist-item-btn:hover, .task-modal-btn:hover, .checklist-delete-btn:hover{
-    background-color: rgb(120, 120, 120);
-}
 .task-modal-input{
     color: white;
     background-color: transparent;
@@ -377,89 +90,17 @@
 .focus-effect:focus{
     border: 2px solid rgb(120, 120, 120);
 }
-
-.task-modal-content textarea{
-    height: 200px;
-}
-
-.task-modal-content input:focus, .task-modal-content textarea:focus{
-    outline: none;
-}
-.close {
-    text-align: right;
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: -7px;
-}
-.close:hover,
-.close:focus {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/*------------------------- Checklist -----------------------------*/
-.checklist-container{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-.checklist-title-container{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.checklist-item-container{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-}
-.checklist-item{
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-.checklist-item-checkbox{
-    display: inline;
-    width: 18px;
-    height: 18px;
-}
-.checklist-item-progress-container{
-    display: flex;
-    gap: 10px;
-    font-size: 8px;
-    margin-top: 10px;
-    color:  rgb(159, 154, 154);
-}
-.checklist-item-progress{
-    width: 100%;
-}
-.checklist-title-input-box, .checklist-list-input-box{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-    position: relative;
-}
-.checklist-delete-btn{
-    padding: 7px 10px;
-    background-color: rgb(100, 100, 100);
-    border: none;
-    border-radius: 5px;
-    color: white;
-    position: absolute;
-    right: 3px;
-}
-.checklist-list-delete-btn{
-    position: absolute;
-    right: 3px;
-}
 .border{
     border: 2px solid rgb(120, 120, 120);
+}
+.icon-btn{
+    padding: 5px;
+    background-color: transparent;
+    cursor: pointer;
+}
+.icon-btn:hover{
+    background-color: rgb(150, 150, 150);
+    border-radius: 5px;
 }
 
 /*------------------------- React quill -----------------------------*/
@@ -495,113 +136,4 @@
 }
 .ql-snow .ql-picker-options{
     color: black !important;
-}
-
-/*------------------------- Activity -----------------------------*/
-.comment-container{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.comment-title-container{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.comment-title{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-}
-.comment-title-btn{
-    padding: 7px 10px;
-    background-color: rgb(100, 100, 100);
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-.comment-title-btn:hover, .comment-title-btn:focus{
-    background-color: rgb(120, 120, 120);
-}
-.comment-input-container{
-    display: flex;
-    gap: 10px;
-}
-.comment-input{
-    width: 100%;
-}
-.comment-input .quill .ql-container.ql-snow{
-    border: none !important;
-    height: 100px;
-}
-.comment-input-btn-container{
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-.comment-save-btn{
-    padding: 7px 10px;
-    background-color: #0c66e4;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-.comment-cancel-btn{
-    padding: 7px 10px;
-    background-color: transparent;
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-.comment-save-btn:hover{
-    background-color: #4c97fd;
-}
-.comment-cancel-btn:hover{
-    padding: 7px 10px;
-    background-color: rgb(100, 100, 100);
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-
-.show-comments-container{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.show-comments-box{
-    display: flex;
-    gap: 10px;
-    align-items: baseline;
-}
-.show-comments-content{
-    width: 100%;
-}
-.comments{
-    background-color: black;
-    padding: 10px;
-    border-radius: 5px;
-}
-.show-comments-btn-container{
-    font-size: 12px;
-    display: flex;
-    gap: 5px;
-    margin-top:5px
-}
-.comments-btn:hover{
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-
-.icon-btn{
-    padding: 5px;
-    background-color: transparent;
-    cursor: pointer;
-}
-.icon-btn:hover{
-    background-color: rgb(150, 150, 150);
-    border-radius: 5px;
 }

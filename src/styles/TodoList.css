@@ -1,0 +1,66 @@
+
+.task-container{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color:   rgb(66, 63, 63) transparent;
+}
+
+.list-title-input{
+    color: white;
+    background-color: black;
+    border: 1px solid transparent;
+    padding: 15px;
+}
+.list-title-input:focus{
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: #1D2125;
+    padding: 15px;
+}
+
+.list-title-input:focus, .task-input:focus{
+    outline: none;
+}
+
+.add-task-btn{
+    text-align: left;
+}
+
+.add-task-btn:hover, #add_list_btn:hover{
+    background-color: #1D2125
+}
+
+.task-name{
+    border: 1px solid black;
+}
+
+.task-card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1D2125;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+
+.task-card:hover{
+    border: 1px solid white;
+}
+
+.task-details-btn, .task-save-btn{
+    padding: 5px;
+    cursor: pointer;
+    background-color: transparent;
+}
+.task-details-btn:hover{
+    padding: 5px;
+    background-color: rgb(120, 120, 120);
+    border-radius: 5px;
+    cursor: pointer;
+}

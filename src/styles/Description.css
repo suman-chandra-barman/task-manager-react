@@ -1,0 +1,11 @@
+.description-container{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+.description-content{
+    width: 100%;
+}
+.description-title{
+    margin-bottom: 20px;
+}

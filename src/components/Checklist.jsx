@@ -1,3 +1,4 @@
+import "../styles/Checklist.css"
 import {MdDelete} from "react-icons/md";
 import { GoChecklist } from "react-icons/go";
 

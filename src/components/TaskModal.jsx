@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import "../styles/TaskModal.css"
 import 'react-quill/dist/quill.snow.css';
 import { FaRegCreditCard } from "react-icons/fa";
 import Checklist from "./Checklist.jsx";

@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import "../styles/Sidebar.css"
 import {FaPlus, FaAngleLeft, FaAngleRight, FaTrash} from "react-icons/fa";
 import {useState} from "react";
 import { RxCross2 } from "react-icons/rx";

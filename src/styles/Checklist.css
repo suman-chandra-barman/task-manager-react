@@ -1,0 +1,70 @@
+.checklist-container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.checklist-title-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.checklist-item-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+.checklist-item{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.checklist-item-checkbox{
+    display: inline;
+    width: 18px;
+    height: 18px;
+}
+.checklist-item-progress-container{
+    display: flex;
+    gap: 10px;
+    font-size: 8px;
+    margin-top: 10px;
+    color:  rgb(159, 154, 154);
+}
+.checklist-item-progress{
+    width: 100%;
+}
+.checklist-title-input-box, .checklist-list-input-box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    position: relative;
+}
+.checklist-delete-btn{
+    padding: 7px 10px;
+    background-color: rgb(100, 100, 100);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    position: absolute;
+    right: 3px;
+}
+.checklist-list-delete-btn{
+    position: absolute;
+    right: 3px;
+}
+
+.add-checklist-item-btn{
+    margin-left: 28px;
+    padding: 10px 20px;
+    background-color: rgb(100, 100, 100);
+    border: none;
+    border-radius: 5px;
+    width: 150px;
+    color: white;
+}
+.add-checklist-item-btn:hover, .task-modal-btn:hover, .checklist-delete-btn:hover{
+    background-color: rgb(120, 120, 120);
+}

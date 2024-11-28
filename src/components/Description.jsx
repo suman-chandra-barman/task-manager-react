@@ -1,3 +1,4 @@
+import "../styles/Description.css";
 import {MdOutlineDescription} from "react-icons/md";
 import ReactQuill from "react-quill";
 
