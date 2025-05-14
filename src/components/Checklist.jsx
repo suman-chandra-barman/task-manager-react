@@ -85,17 +85,16 @@ function Checklist({selectedTask, taskLists, setBoards, boardIndex}) {
                                         }
                                         type="text"
                                         value={checklist.name}
-                                        className="task-modal-input hover-effect"
+                                        className="task-modal-input"
                                         placeholder="Write checklist name"
                                     />
-                                    <div onClick={() => handleDeleteChecklist(checklistIdx)} className="icon-btn">
+                                    <div onClick={() => handleDeleteChecklist(checklistIdx)} className="icon-btn checklist-list-delete-btn">
                                         < MdDelete size={20}/>
                                     </div>
                                 </div>
                             </div>
                             <div className="checklist-item-progress-container">
-                                        <span
-                                            className="">{Math.round(itemProgress)}%</span>
+                                <span className="">{Math.round(itemProgress)}%</span>
                                 <progress
                                     className='checklist-item-progress'
                                     value={itemProgress}
@@ -104,38 +103,37 @@ function Checklist({selectedTask, taskLists, setBoards, boardIndex}) {
                                 </progress>
                             </div>
                             <div className="checklist-item-container">
-                                {
-                                    taskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items?.map((item, itemIdx) =>
-                                        <div key={itemIdx} className="checklist-item">
+                                {taskLists[selectedTask.listIndex].tasks[selectedTask.taskIndex].checklists[checklistIdx].items?.map((item, itemIdx) =>
+                                    <div key={itemIdx} className="checklist-item">
+                                        <input
+                                            onChange={
+                                                function (event) {
+                                                    return handleChecklistItemCheckboxStatusChange(event, checklistIdx, itemIdx);
+                                                }
+                                            }
+                                            type="checkbox"
+                                            className="checklist-item-checkbox task-modal-input"
+                                            checked={item.isChecked}
+                                        />
+                                        <div className="checklist-list-input-box">
                                             <input
                                                 onChange={
                                                     function (event) {
-                                                        return handleChecklistItemCheckboxStatusChange(event, checklistIdx, itemIdx);
+                                                        return handleChecklistItemChange(event, checklistIdx, itemIdx);
                                                     }
                                                 }
-                                                type="checkbox"
-                                                className="checklist-item-checkbox task-modal-input"
-                                                checked={item.isChecked}
+                                                type="text"
+                                                value={item.name}
+                                                className="task-modal-input hover-effect"
+                                                placeholder="Write something..."
                                             />
-                                            <div className="checklist-list-input-box">
-                                                <input
-                                                    onChange={
-                                                        function (event) {
-                                                            return handleChecklistItemChange(event, checklistIdx, itemIdx);
-                                                        }
-                                                    }
-                                                    type="text"
-                                                    value={item.name}
-                                                    className="task-modal-input hover-effect"
-                                                    placeholder="Write something..."
-                                                />
-                                                <div onClick={() => handleDeleteChecklistItem(checklistIdx, itemIdx)}
-                                                     className="icon-btn checklist-list-delete-btn">
-                                                    <MdDelete size={20}/>
-                                                </div>
+                                            <div onClick={() => handleDeleteChecklistItem(checklistIdx, itemIdx)}
+                                                 className="icon-btn checklist-list-delete-btn">
+                                                <MdDelete size={20}/>
                                             </div>
-                                        </div>)
-                                }
+                                        </div>
+                                    </div>
+                                )}
                                 <button onClick={() => handleChecklistItem(checklistIdx)}
                                         className="add-checklist-item-btn">Add an item
                                 </button>

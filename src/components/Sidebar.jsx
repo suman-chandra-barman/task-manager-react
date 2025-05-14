@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
 import "../styles/Sidebar.css"
 import {FaPlus, FaAngleLeft, FaAngleRight, FaTrash} from "react-icons/fa";
 import {useState} from "react";
 import { RxCross2 } from "react-icons/rx";
 
 function Sidebar({boards,boardIndex,setBoards,setBoardIndex, isCollapsed, setIsCollapsed}) {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isAddBoardModalOpen, setIsAddBoardModalOpen] = useState(false);
     const [boardName, setBoardName] = useState("");
 
     function handleAddBoard(){
@@ -13,12 +12,12 @@ function Sidebar({boards,boardIndex,setBoards,setBoardIndex, isCollapsed, setIsC
             const updatedBoards = [...boards];
             updatedBoards.push({title:boardName, taskLists:[]});
             setBoards(updatedBoards);
-            setIsOpen(false);
+            setIsAddBoardModalOpen(false);
         }
     }
     function handleCancelBoard(){
         setBoardName("");
-        setIsOpen(false);
+        setIsAddBoardModalOpen(false);
     }
     function handleDeleteBoard(index){
         let confirmed = confirm("Are you sure want to delete?");
@@ -42,15 +41,14 @@ function Sidebar({boards,boardIndex,setBoards,setBoardIndex, isCollapsed, setIsC
                         </div>
                         <div className="sidebar-title">
                             <span>Your boards</span>
-                            <div title="Add New Board" onClick={() => setIsOpen(!isOpen)} className="icon-btn">
+                            <div title="Add New Board" onClick={() => setIsAddBoardModalOpen(!isAddBoardModalOpen)} className="icon-btn">
                                 <FaPlus/>
                             </div>
-                            {isOpen &&
+                            {isAddBoardModalOpen &&
                                 <div className="add-board-container">
                                     <div className="add-board-title-container">
                                         <h3 className="add-board-title">Add board</h3>
-                                        <RxCross2 onClick={handleCancelBoard} size={20}
-                                                  className="add-board-close-btn"/>
+                                        <RxCross2 onClick={handleCancelBoard} size={20}className="add-board-close-btn"/>
                                     </div>
                                     <label htmlFor="add_board">Title</label> <br/>
                                     <input onChange={(e) => setBoardName(e.target.value)} id="add_board" type="text"

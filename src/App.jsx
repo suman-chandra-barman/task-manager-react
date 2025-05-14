@@ -1,14 +1,14 @@
-/* eslint-disable no-unused-vars */
-import { Fragment, useContext, useEffect, useRef, useState } from "react";
+import {useContext, useEffect, useRef, useState } from "react";
 import "./App.css";
 import TodoList from "./components/TodoList";
 import TaskModal from "./components/TaskModal";
 import { CiLight } from "react-icons/ci";
 import { MdNightlight } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
-import { ThemeContext, themes } from "./context/ThemeContext";
+import { ThemeContext } from "./context/ThemeContext";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import Sidebar from "./components/Sidebar.jsx";
+import { defaultBoards } from "./helper/constant.js";
 
 function App(){
     const theme = useContext(ThemeContext);
@@ -22,7 +22,7 @@ function App(){
     const [targetedTaskIndex, setTargetedTaskIndex] = useState(null);
     const [isCollapsed, setIsCollapsed] = useState(false);
 
-    const [themeState,  setThemeState] = useLocalStorage("theme", theme.light);
+    const [themeState,  setThemeState] = useLocalStorage("theme", theme.dark);
 
     const listDomRefs = useRef(new Array());
     const taskDomRefs = useRef(new Array());
@@ -31,6 +31,8 @@ function App(){
         const localStorageBoards = localStorage.getItem("boards");
         if(localStorageBoards){
             setBoards(JSON.parse(localStorageBoards))
+        }else{
+            localStorage.setItem("boards",JSON.stringify(defaultBoards))
         }
     },[])
 
@@ -131,8 +133,9 @@ function App(){
                     }
                 </div>
                 :
-                <div className="empty-board">Create a board🫡</div>
-
+                <div className="empty-board" onClick={() => setIsAddBoardModalOpen(!isAddBoardModalOpen)}>
+                    Create a board🫡
+                </div>
             }
         </main>
     )

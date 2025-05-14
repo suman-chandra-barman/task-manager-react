@@ -18,7 +18,7 @@ function Description({task, selectedTask, taskLists, setBoards, boardIndex}) {
         <div className="description-container">
             <MdOutlineDescription size={20}/>
             <div className='description-content'>
-                <p className="description-title">Description</p>
+                <h4 className="description-title">Description</h4>
                 <ReactQuill
                     theme="snow"
                     value={task.description}
