@@ -4,7 +4,12 @@ A modern and interactive task management application inspired by Trello. This ap
 
 ## 🚀 Live Demo
 
-🌐 [Live Website](https://your-live-site-link.com)
+🌐 [Live Website](https://mastertaskmanager.netlify.app/)
+
+## ▶️ Project Functionality Video
+
+Wach this [Video](https://mastertaskmanager.netlify.app/) to understand the functionality of Task Manager.
+
 
 ## 🧰 Tech Stack
 
@@ -16,7 +21,7 @@ A modern and interactive task management application inspired by Trello. This ap
 ## 🎯 Features
 
 - ✅ **Trello-Style Drag-and-Drop**  
-  Move tasks and lists freely using a multi-directional drag-and-drop system powered by `react-beautiful-dnd`.
+  Move tasks and lists freely using a multi-directional drag-and-drop system.
 
 - 📝 **Rich Text Descriptions and Comments**  
   Add and edit detailed task descriptions and comments using a rich text editor (React Quill).
@@ -27,24 +32,26 @@ A modern and interactive task management application inspired by Trello. This ap
 - 🔁 **Real-Time UI Updates**  
   Smooth user interface with dynamic updates as you interact with tasks, lists, and boards.
 
-## 📸 Screenshots
+## Getting Started
 
-<!-- Add screenshots here -->
-<!-- ![Screenshot](./screenshots/screenshot1.png) -->
+1. **Clone the Repository:**
 
-## 🛠️ Installation & Setup
+    ```
+    https://github.com/suman-chandra-barman/task-manager-react.git
+    ```
 
-### 🔧 Install Dependencies
+2. **Install Dependencies:**
 
-```bash
-npm install
-```
+    ```
+    cd task-manager-react
+    npm install
+    ```
 
 
-### ▶️ Start the Development Server
+3. **Start the Server:**
 
-```bash
-npm start
-```
+    ```
+    npm run dev
+    ```
 
 
